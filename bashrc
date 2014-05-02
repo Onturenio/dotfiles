@@ -38,10 +38,21 @@ source ~/dotfiles/shell-commands.sh
 source ~/.git-completion.bash
 
 # Only for my PC
-if [[ $HOST =~ "kk" ]]; then 
+if [[ $HOST =~ "linux" || $HOST =~ "port" ]]; then 
   source ~/SOFTWARE/cdo-1.6.0/contrib/cdoCompletion.bash
   export PATH="$PATH:~/SOFTWARE/cdo-1.6.0/src"
   export PATH="$PATH:/usr/local/texlive/2013/bin/x86_64-linux"
   export PATH="$PATH:~/SOFTWARE/MM5"
   export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
+fi
+
+# Only for CSCS
+if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" ]]; then 
+  function killalljobs {
+  joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")
+  for jobid in $joblist; do 
+    scancel $jobid
+  done
+  }
+  alias micola='squeue -u $USER | sort -k 4'
 fi
