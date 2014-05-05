@@ -26,25 +26,6 @@ set hidden
 set wildmenu
 :let fortran_free_source=1"}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FANCY STATUSLINE
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set noruler"{{{
-set laststatus=2
-set statusline=
-set statusline +=%1*\ %n\ %*      "buffer number
-set statusline +=%1*\ %<%F\ %*     "full path
-"set statusline +=%1*%{&ff}%*      "file format
-set statusline +=%1*%y%*          "file type
-set statusline +=%2*%m%*           "modified flag
-set statusline +=%=                "central ruler
-set statusline +=%1*%3l,%3v\ %*      "cursor coordinates
-set statusline +=%3*[%L\ lines]%*  "total lines
-"set statusline +=%2*0x%04B\ %*  "character under cursor
-"set statusline +=%2*%4b\ %*  "character under cursor
-hi User1 ctermbg=blue  ctermfg=white guibg=blue  guifg=green
-hi User2 ctermbg=red  ctermfg=white guibg=blue  guifg=green
-hi User3 ctermbg=yellow  ctermfg=red  guibg=blue  guifg=green"}}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
@@ -252,6 +233,8 @@ augroup ShellMappings
   autocmd BufNewFile,BufRead *.sh nnoremap <buffer> <leader>{ viw<esc>a}<esc>hbi{<esc>lel
   autocmd BufNewFile,BufRead *.sh nnoremap <buffer> <leader>} viw<esc>a}<esc>hbi{<esc>lel
   autocmd BufNewFile,BufRead *.sh vnoremap <buffer> $ <esc>`>a}<esc>`<i${<esc>
+  autocmd BufNewFile,BufRead *.sh hi myExit ctermbg=yellow  ctermfg=red  
+  autocmd BufNewFile,BufRead *.sh match myExit /^\s\+\zsexit/
 augroup END
 
 function! Smart_TabComplete_Bash()
