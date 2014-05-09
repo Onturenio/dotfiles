@@ -54,5 +54,7 @@ if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" ]]; then
     scancel $jobid
   done
   }
-  alias micola='squeue -u $USER | sort -k 4'
+  alias micola='squeue | head -1; squeue -u $USER |grep -v USER| sort -k 4'
+  alias workenv='module load cdo; module load netcdf'
+  export RESULTS='/project/s430/navarro'
 fi

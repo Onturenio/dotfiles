@@ -234,7 +234,7 @@ augroup ShellMappings
   autocmd BufNewFile,BufRead *.sh nnoremap <buffer> <leader>} viw<esc>a}<esc>hbi{<esc>lel
   autocmd BufNewFile,BufRead *.sh vnoremap <buffer> $ <esc>`>a}<esc>`<i${<esc>
   autocmd BufNewFile,BufRead *.sh hi myExit ctermbg=yellow  ctermfg=red  
-  autocmd BufNewFile,BufRead *.sh match myExit /^\s\+\zsexit/
+  autocmd BufNewFile,BufRead *.sh match myExit /^\s*\zsexit/
 augroup END
 
 function! Smart_TabComplete_Bash()
@@ -347,6 +347,7 @@ augroup END
 "FANCY STATUS LINE WITH LIGHTLINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'powerline',
       \ 'mode_map': { 'c': 'NORMAL' },
