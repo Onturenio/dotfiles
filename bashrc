@@ -19,6 +19,8 @@ alias ubelix='ssh -X jgomez@submit.unibe.ch'
 alias phkup300='ssh -X gomez@phkup300'
 alias rosa='ssh -X navarro@rosa.cscs.ch'
 alias julier='ssh -X navarro@julier.cscs.ch'
+alias sunray1="ssh -X gomez@$BASTION -L 10001:$SUNRAY1:22 -f sleep 5 ; ssh -X -p 10001 gomez@localhost"
+alias hzgpc="ssh -X gomez@$BASTION -L 10002:$HZGPC:22 -f sleep 5 ; ssh -X -p 10002 navarro@localhost"
 
 alias vpn_unibe_up='sudo /usr/sbin/vpnc VPN2UniBe.conf'
 alias vpn_unibe_down='sudo /usr/sbin/vpnc-disconnect'
