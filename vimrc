@@ -342,6 +342,18 @@ augroup FortranMappings
 augroup END
 "}}}
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"NCL CONFIGURATION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+augroup nclMappings
+  autocmd!
+  autocmd BufNewFile,BufRead *.ncl set filetype=ncl
+  autocmd BufNewFile,BufRead *.ncl set complete+=k
+  autocmd BufNewFile,BufRead *.ncl set dictionary+=/users/navarro/.vim/dictionaries/ncl
+  autocmd BufNewFile,BufRead *.ncl let b:commentchar = ";"
+augroup END
+"}}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "FANCY STATUS LINE WITH LIGHTLINE
