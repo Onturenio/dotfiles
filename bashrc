@@ -61,6 +61,6 @@ if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" ]]; then
   done
   }
   alias micola='squeue | head -1; squeue -u $USER |grep -v USER| sort -k 4'
-  alias workenv='module load cdo netcdf git'
+  alias workenv='module load cdo netcdf git ncl ncview'
   export RESULT='/project/s430/navarro'
 fi
