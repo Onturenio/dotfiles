@@ -73,6 +73,16 @@ vnoremap <c-left> <
 nnoremap <space> za
 vnoremap <space> zf
 
+nnoremap <leader>f :call FoldColumnToggle()<cr>
+
+function! FoldColumnToggle()
+  if &foldcolumn
+    setlocal foldcolumn=0
+  else
+    setlocal foldcolumn=4
+  endif
+endfunction
+
 " window navigation
 nnoremap <c-j> <c-w>w
 nnoremap <c-k> <c-w>W
@@ -350,7 +360,7 @@ augroup nclMappings
   autocmd!
   autocmd BufNewFile,BufRead *.ncl set filetype=ncl
   autocmd BufNewFile,BufRead *.ncl set complete+=k
-  autocmd BufNewFile,BufRead *.ncl set dictionary+=/users/navarro/.vim/dictionaries/ncl
+  autocmd BufNewFile,BufRead *.ncl set dictionary+=~/.vim/dictionaries/ncl
   autocmd BufNewFile,BufRead *.ncl let b:commentchar = ";"
 augroup END
 "}}}
