@@ -1,7 +1,8 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "GENERAL OPTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  filetype plugin on"{{{
+"{{{
+filetype plugin on
 filetype indent on
 set nocompatible
 syntax on
@@ -24,7 +25,10 @@ set expandtab
 set pastetoggle=<F2>
 set hidden
 set wildmenu
-:let fortran_free_source=1"}}}
+
+"Highlight trailing spaces as errors
+match Error /\s\+$/
+"}}}
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -339,6 +343,7 @@ augroup FortranMappings
   autocmd!
   autocmd BufNewFile,BufRead *.f90 let b:commentchar = "!"
   autocmd BufNewFile,BufRead *.f   let b:commentchar = "!"
+  let fortran_free_source=1
 augroup END
 "}}}
 

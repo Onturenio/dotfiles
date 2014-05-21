@@ -44,6 +44,7 @@ if [[ $HOST =~ "linux" || $HOST =~ "port" ]]; then
   export PATH="$PATH:/usr/local/texlive/2013/bin/x86_64-linux"
   export PATH="$PATH:~/SOFTWARE/MM5"
   export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
+  export PATH="$PATH:~/SOFTWARE/shellcheck-master"
 
   alias vpn_unibe_up='sudo /usr/sbin/vpnc VPN2UniBe.conf'
   alias vpn_unibe_down='sudo /usr/sbin/vpnc-disconnect'
