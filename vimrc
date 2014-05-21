@@ -249,6 +249,7 @@ augroup ShellMappings
   autocmd BufNewFile,BufRead *.sh vnoremap <buffer> $ <esc>`>a}<esc>`<i${<esc>
   autocmd BufNewFile,BufRead *.sh hi myExit ctermbg=yellow  ctermfg=red  
   autocmd BufNewFile,BufRead *.sh match myExit /^\s*\zsexit/
+  autocmd Filetype sh set foldmethod=marker
 augroup END
 
 function! Smart_TabComplete_Bash()
