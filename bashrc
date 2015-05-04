@@ -54,7 +54,7 @@ fi
 ##########################################################################
 # Only for CSCS
 ##########################################################################
-if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" ]]; then 
+if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" || $HOST =~ "dora" || $HOST =~ "pilatus" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 6)\]\u@\h \w\n> \[$(tput sgr0)\]"
   function killalljobs {
   joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")

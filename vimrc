@@ -132,7 +132,7 @@ nnoremap <leader>0 <c-w>=
 inoremap jk <esc>
 inoremap ZZ <esc>ZZ
 
-" exit to normal mode
+" exit normal mode
 "inoremap <esc> <nop>
 inoremap <c-up> <esc>
 inoremap <c-down> <esc>
