@@ -28,7 +28,36 @@ set wildmenu
 
 "Highlight trailing spaces as errors
 match Error /\s\+$/
-"}}}
+" tell it to use an undo file
+" set undofile
+" set undodir=~/.vimundo/
+
+" Allow Alt key in Gnome-Shell
+let c='a'
+while c <= 'z'
+  exec "set <A-".c.">=\e".c
+  exec "imap \e".c." <A-".c.">"
+  let c = nr2char(1+char2nr(c))
+endw
+
+"set timeout ttimeoutlen=50
+
+"set timeout         " Do time out on mappings and others
+"set timeoutlen=2000 " Wait {num} ms before timing out a mapping
+
+" When you’re pressing Escape to leave insert mode in the terminal, it will by
+" default take a second or another keystroke to leave insert mode completely
+" and update the statusline. This fixes that. I got this from:
+" https://powerline.readthedocs.org/en/latest/tipstricks.html#vim
+"if !has('gui_running')
+"  set ttimeoutlen=10
+"  augroup FastEscape
+"    autocmd!
+"    au InsertEnter * set timeoutlen=0
+"    au InsertLeave * set timeoutlen=1000
+"  augroup END
+"endif
+ "}}}
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -42,14 +71,14 @@ let mapleader = ","
 " Mouse setup
 set mouse=a
 set mousemodel=popup
-noremap <ScrollWheelUp> 3<C-Y>
-noremap <ScrollWheelDown> 3<C-E>
-inoremap <ScrollWheelUp> <esc>3<C-Y>a
-inoremap <ScrollWheelDown> <esc>3<C-E>a
-noremap <C-ScrollWheelUp> <C-Y>
-noremap <C-ScrollWheelDown> <C-E>
-inoremap <C-ScrollWheelUp> <esc><C-Y>a
-inoremap <C-ScrollWheelDown> <esc><C-E>a
+noremap <ScrollWheelUp> <C-Y>
+noremap <ScrollWheelDown> <C-E>
+inoremap <ScrollWheelUp> <esc><C-Y>a
+inoremap <ScrollWheelDown> <esc><C-E>a
+noremap <C-ScrollWheelUp> 3<C-Y>
+noremap <C-ScrollWheelDown> 3<C-E>
+inoremap <C-ScrollWheelUp> <esc>3<C-Y>a
+inoremap <C-ScrollWheelDown> <esc>3<C-E>a
 
 "intuitive cursor movement
 noremap <A-UP> gk
@@ -68,8 +97,8 @@ noremap <c-up> ddkP
 noremap <c-down> ddp
 
 " indent with cursor keys
-nnoremap <c-right> >>
-nnoremap <c-left> <<
+nnoremap <c-right> ma>>`all
+nnoremap <c-left> ma<<`ahh
 vnoremap <c-right> >
 vnoremap <c-left> <
 
@@ -87,6 +116,9 @@ function! FoldColumnToggle()
   endif
 endfunction
 
+nnoremap <leader>n :set number!<cr>
+
+
 " window navigation
 nnoremap <c-j> <c-w>w
 nnoremap <c-k> <c-w>W
@@ -100,8 +132,8 @@ nnoremap <leader>0 <c-w>=
 inoremap jk <esc>
 inoremap ZZ <esc>ZZ
 
-" exit normal mode
-inoremap <esc> <nop>
+" exit to normal mode
+"inoremap <esc> <nop>
 inoremap <c-up> <esc>
 inoremap <c-down> <esc>
 vnoremap <c-up> <esc>
@@ -110,6 +142,7 @@ vnoremap <c-down> <esc>
 "noremap <right> <nop>
 "noremap <up> <nop>
 "noremap <down> <nop>
+
 
 " text object mappings
 onoremap { i{
@@ -224,10 +257,10 @@ augroup END
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Avoid opening already opened documents in other vim sesion
-augroup NoSimultaneousEdits
-  autocmd!
-  autocmd  SwapExists  *  :let v:swapchoice = 'q'
-augroup END
+"augroup NoSimultaneousEdits
+"  autocmd!
+"  autocmd  SwapExists  *  :let v:swapchoice = 'q'
+"augroup END
 
 " Uset Pathogen
 execute pathogen#infect()
@@ -298,6 +331,8 @@ augroup TexMappings
   autocmd!
   autocmd BufNewFile,BufRead *.tex let b:commentchar = "%"
   autocmd BufNewFile,BufRead *.tex imap <expr> <tab> Smart_TabComplete_Tex()
+"  autocmd BufNewFile,BufRead *.tex nnoremap <buffer> <c-up> gqap
+"  autocmd BufNewFile,BufRead *.tex nnoremap <buffer> <c-down> gqap
 augroup END
 
 function! Smart_TabComplete_Tex()
