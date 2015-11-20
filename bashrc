@@ -32,6 +32,7 @@ alias phkup300='ssh -X gomez@phkup300'
 alias dora='ssh -X navarro@dora.cscs.ch'
 alias ela='ssh -X navarro@ela.cscs.ch'
 alias data='ssh -X gomez@oeschgerstor01.unibe.ch'
+alias pilatus='ssh -X navarro@pilatus.cscs.ch'
 ##########################################################################
 
 
@@ -66,5 +67,6 @@ if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" || $HOST =~ "dora" 
   }
   alias micola='squeue | head -1; squeue -u $USER |grep -v USER| sort -k 4'
   alias workenv='module load cdo netcdf git ncl ncview'
-  export RESULT='/project/s430/navarro'
+  export RESULT='/project/s584/navarro'
+  export PATH="$PATH:~/SOFTWARE"
 fi
