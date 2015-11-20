@@ -31,13 +31,14 @@ alias ubelix='ssh -X jgomez@submit.unibe.ch'
 alias phkup300='ssh -X gomez@phkup300'
 alias dora='ssh -X navarro@dora.cscs.ch'
 alias ela='ssh -X navarro@ela.cscs.ch'
+alias data='ssh -X gomez@oeschgerstor01.unibe.ch'
 ##########################################################################
 
 
 ##########################################################################
 # Only for my PC
 ##########################################################################
-if [[ $HOST =~ "linux" || $HOST =~ "port" ]]; then 
+if [[ $HOST =~ "bender" || $HOST =~ "port" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u@\h \w\n> \[$(tput sgr0)\]"
   source ~/SOFTWARE/cdoCompletion.bash
   export PATH="$PATH:/usr/local/texlive/2013/bin/x86_64-linux"
@@ -45,6 +46,7 @@ if [[ $HOST =~ "linux" || $HOST =~ "port" ]]; then
   export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
   export PATH="$PATH:~/SOFTWARE/shellcheck-master"
   export PATH="$PATH:~/SOFTWARE/anaconda/bin"
+  export PATH="$PATH:$HOME/SOFTWARE/local/bin/"
 
   alias vpn_unibe_up='sudo /usr/sbin/vpnc VPN2UniBe.conf'
   alias vpn_unibe_down='sudo /usr/sbin/vpnc-disconnect'

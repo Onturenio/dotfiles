@@ -389,6 +389,8 @@ augroup FortranMappings
   autocmd!
   autocmd BufNewFile,BufRead *.f90 let b:commentchar = "!"
   autocmd BufNewFile,BufRead *.f   let b:commentchar = "!"
+  autocmd BufNewFile,BufRead *.f90 syn match fortranUnitHeader "type"
+  autocmd BufNewFile,BufRead *.f90 syn match fortranUnitHeader "\<end\s*type"
   let fortran_free_source=1
 augroup END
 "}}}
