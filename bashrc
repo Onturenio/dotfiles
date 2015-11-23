@@ -70,3 +70,19 @@ if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" || $HOST =~ "dora" 
   export RESULT='/project/s584/navarro'
   export PATH="$PATH:~/SOFTWARE"
 fi
+
+
+##########################################################################
+# Only for DKRZ
+##########################################################################
+if [[ $HOSTNAME =~ "mlogin100" ]]; then 
+  export PS1="\[$(tput bold)\]\[$(tput setaf 3)\]\u@\h \w\n> \[$(tput sgr0)\]"
+  function killalljobs {
+  joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")
+  for jobid in $joblist; do 
+    scancel $jobid
+  done
+  }
+  alias micola='squeue | head -1; squeue -u $USER |grep -v USER| sort -k 4'
+  alias workenv='module load cdo netcdf git ncl ncview'
+fi
