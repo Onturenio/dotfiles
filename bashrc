@@ -1,4 +1,5 @@
 export EDITOR=/usr/bin/vim
+source ~/dotfiles/HOSTNAMES
 
 # Common alias
 alias vmi="vim"
@@ -33,6 +34,14 @@ alias dora='ssh -X navarro@dora.cscs.ch'
 alias ela='ssh -X navarro@ela.cscs.ch'
 alias data='ssh -X gomez@oeschgerstor01.unibe.ch'
 alias pilatus='ssh -X navarro@pilatus.cscs.ch'
+
+alias data_outside="ssh -X gomez@$UNIBEGATEWAY -L 10002:$OCDB:22 -f sleep 5 ; ssh -X -p 10002 gomez@localhost"
+alias unibepc_outside="ssh -X gomez@$UNIBEGATEWAY -L 10003:$UNIBEPC:22 -f sleep 5 ; ssh -X -p 10003 gomez@localhost"
+function open_data {
+ssh gomez@$UNIBEGATEWAY -L 10010:$OCDB:22 -f sleep 100
+echo "scp -r -P10010 __ gomez@localhost:"
+}
+
 ##########################################################################
 
 
@@ -42,7 +51,9 @@ alias pilatus='ssh -X navarro@pilatus.cscs.ch'
 if [[ $HOST =~ "bender" || $HOST =~ "port" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u@\h \w\n> \[$(tput sgr0)\]"
   source ~/SOFTWARE/cdoCompletion.bash
-  export PATH="$PATH:/usr/local/texlive/2013/bin/x86_64-linux"
+  export PATH="$PATH:/home/navarro/SOFTWARE/texlive/2015/bin/x86_64-linux"
+  export MANPATH="$MANPATH:/home/navarro/SOFTWARE/texlive/2015/texmf-dist/doc/man/"
+  export INFOPATH="$INFOPATH:/home/navarro/SOFTWARE/texlive/2015/texmf-dist/doc/man/"
   export PATH="$PATH:~/SOFTWARE/MM5"
   export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
   export PATH="$PATH:~/SOFTWARE/shellcheck-master"
