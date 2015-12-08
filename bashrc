@@ -68,7 +68,7 @@ fi
 ##########################################################################
 # Only for CSCS
 ##########################################################################
-if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" || $HOST =~ "dora" || $HOST =~ "pilatus" ]]; then 
+if [[ $HOST =~ "ela" || $HOST =~ "dora" || $HOST =~ "pilatus" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 6)\]\u@\h \w\n> \[$(tput sgr0)\]"
   function killalljobs {
   joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")
@@ -82,6 +82,9 @@ if [[ $HOST =~ "rosa" || $HOST =~ "ela" || $HOST =~ "julier" || $HOST =~ "dora" 
   export PATH="$PATH:~/SOFTWARE"
 fi
 
+if [[ $HOST =~ "pilatus" ]]; then 
+  module load cdo ncl PrgEnv-gnu netcdf
+fi
 
 ##########################################################################
 # Only for DKRZ
