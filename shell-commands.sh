@@ -21,7 +21,7 @@ fi
 
 function ext2serie {
 if [ $# -eq 2 ]; then
-  cdo info $1 | grep -v Date | awk '{print $10}' > data
+  cdo info $1 | grep -v Date | awk '{print $9}' > data
   cdo info $1 | grep -v Date | awk '{print $3}' | awk -F- '{print $1}' > dates
   paste dates data > $2
   rm -f data dates
@@ -32,7 +32,7 @@ fi
 
 function extfield2serie {
 if [ $# -eq 2 ]; then
-  cdo info -fldmean $1 | grep -v Date | awk '{print $10}' > data
+  cdo info -fldmean $1 | grep -v Date | awk '{print $9}' > data
   cdo info $1 | grep -v Date | awk '{print $3}' | awk -F- '{print $1}' > dates
   paste dates data > $2
   rm -f data dates

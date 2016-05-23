@@ -24,8 +24,10 @@ alias mistral='ssh -X g260065@mistral.dkrz.de'
 alias sunray1="ssh -X gomez@$BASTION -L 10001:$SUNRAY1:22 -f sleep 5 ; ssh -X -p 10001 gomez@localhost"
 
 # Murcia
-alias ciclon='ssh -X ciclon.inf.um.es'
-alias huracan='ssh -X huracan.inf.um.es'
+alias ciclon='ssh -X navarro@ciclon.inf.um.es'
+alias huracan='ssh -X navarro@huracan.inf.um.es'
+alias mar='ssh -X navarro@mar.inf.um.es'
+alias nimbus='ssh -X navarro@nimbus.inf.um.es'
 
 # Bern
 alias ubelix='ssh -X jgomez@submit.unibe.ch'
@@ -35,10 +37,10 @@ alias ela='ssh -X navarro@ela.cscs.ch'
 alias data='ssh -X gomez@oeschgerstor01.unibe.ch'
 alias pilatus='ssh -X navarro@pilatus.cscs.ch'
 
-alias data_outside="ssh -X gomez@$UNIBEGATEWAY -L 10002:$OCDB:22 -f sleep 5 ; ssh -X -p 10002 gomez@localhost"
+alias data_outside="ssh -X gomez@$UNIBEGATEWAY -L 10002:$OCDS:22 -f sleep 5 ; ssh -X -p 10002 gomez@localhost"
 alias unibepc_outside="ssh -X gomez@$UNIBEGATEWAY -L 10003:$UNIBEPC:22 -f sleep 5 ; ssh -X -p 10003 gomez@localhost"
 function open_data {
-ssh gomez@$UNIBEGATEWAY -L 10010:$OCDB:22 -f sleep 100
+ssh gomez@$UNIBEGATEWAY -L 10010:oeschgerstor01.unibe.ch:22 -f sleep 100
 echo "scp -r -P10010 __ gomez@localhost:"
 }
 
@@ -59,6 +61,7 @@ if [[ $HOST =~ "bender" || $HOST =~ "port" ]]; then
   export PATH="$PATH:~/SOFTWARE/shellcheck-master"
   export PATH="$PATH:~/SOFTWARE/anaconda/bin"
   export PATH="$PATH:$HOME/SOFTWARE/local/bin/"
+  export PATH="$PATH:$HOME/SOFTWARE/"
 
   alias vpn_unibe_up='sudo /usr/sbin/vpnc VPN2UniBe.conf'
   alias vpn_unibe_down='sudo /usr/sbin/vpnc-disconnect'

@@ -129,11 +129,11 @@ nnoremap <leader>- <c-w>-
 nnoremap <leader>0 <c-w>=
 
 " shortcuts to exit
-inoremap jk <esc>
 inoremap ZZ <esc>ZZ
 
 " exit normal mode
 "inoremap <esc> <nop>
+inoremap jk <esc>l
 inoremap <c-up> <esc>
 inoremap <c-down> <esc>
 vnoremap <c-up> <esc>
@@ -389,6 +389,7 @@ augroup FortranMappings
   autocmd!
   autocmd BufNewFile,BufRead *.f90 let b:commentchar = "!"
   autocmd BufNewFile,BufRead *.f   let b:commentchar = "!"
+  autocmd BufNewFile,BufRead *.f03 let b:commentchar = "!"
   autocmd BufNewFile,BufRead *.f90 syn match fortranUnitHeader "type"
   autocmd BufNewFile,BufRead *.f90 syn match fortranUnitHeader "\<end\s*type"
   let fortran_free_source=1

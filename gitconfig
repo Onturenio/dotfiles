@@ -11,3 +11,5 @@
 	ui = true
 [alias]
 	history = log --oneline --graph
+[push]
+	default = simple
