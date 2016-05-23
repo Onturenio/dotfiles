@@ -89,11 +89,28 @@ fi
 ##########################################################################
 # Only for DKRZ
 ##########################################################################
-if [[ $HOSTNAME =~ "mlogin100" ]]; then 
+if [[ $HOSTNAME =~ "mlogin100" ]]; then
   export PS1="\[$(tput bold)\]\[$(tput setaf 3)\]\u@\h \w\n> \[$(tput sgr0)\]"
   function killalljobs {
   joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")
-  for jobid in $joblist; do 
+  for jobid in $joblist; do
+    scancel $jobid
+  done
+  }
+  alias micola='squeue | head -1; squeue -u $USER |grep -v USER| sort -k 4'
+  alias workenv='module load cdo netcdf git ncl ncview'
+fi
+
+
+
+##########################################################################
+# Only for MAR
+##########################################################################
+if [[ $HOSTNAME =~ "mar" ]]; then
+  export PS1="\[$(tput bold)\]\[$(tput setaf 3)\]\u@\h \w\n> \[$(tput sgr0)\]"
+  function killalljobs {
+  joblist=$(squeue -u $USER | grep -v JOB | awk "{print \$1}" | tr "\n" " ")
+  for jobid in $joblist; do
     scancel $jobid
   done
   }
