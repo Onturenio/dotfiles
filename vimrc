@@ -26,6 +26,12 @@ set pastetoggle=<F2>
 set hidden
 set wildmenu
 
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
 "Highlight trailing spaces as errors
 match Error /\s\+$/
 " tell it to use an undo file

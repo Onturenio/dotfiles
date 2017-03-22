@@ -36,6 +36,7 @@ alias dora='ssh -X navarro@dora.cscs.ch'
 alias ela='ssh -X navarro@ela.cscs.ch'
 alias data='ssh -X gomez@oeschgerstor01.unibe.ch'
 alias pilatus='ssh -X navarro@pilatus.cscs.ch'
+alias unibeproxy="echo Setup Browser to use SOCKS proxy through port 7777; ssh -D7777 gomez@$UNIBEGATEWAY"
 
 alias data_outside="ssh -X gomez@$UNIBEGATEWAY -L 10002:$OCDS:22 -f sleep 5 ; ssh -X -p 10002 gomez@localhost"
 alias unibepc_outside="ssh -X gomez@$UNIBEGATEWAY -L 10003:$UNIBEPC:22 -f sleep 5 ; ssh -X -p 10003 gomez@localhost"
@@ -48,9 +49,10 @@ echo "scp -r -P10010 __ gomez@localhost:"
 
 
 ##########################################################################
+  
 # Only for my PC
 ##########################################################################
-if [[ $HOST =~ "bender" || $HOST =~ "port" ]]; then 
+if [[ $HOST =~ "bender" || $HOSTNAME =~ "bender" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u@\h \w\n> \[$(tput sgr0)\]"
   source ~/SOFTWARE/cdoCompletion.bash
   export PATH="$PATH:/home/navarro/SOFTWARE/texlive/2015/bin/x86_64-linux"
