@@ -49,14 +49,14 @@ echo "scp -r -P10010 __ gomez@localhost:"
 
 
 ##########################################################################
-  
 # Only for my PC
 ##########################################################################
 if [[ $HOST =~ "bender" || $HOSTNAME =~ "bender" ]]; then 
   export PS1="\[$(tput bold)\]\[$(tput setaf 2)\]\u@\h \w\n> \[$(tput sgr0)\]"
   source ~/SOFTWARE/cdoCompletion.bash
+  source ~/SOFTWARE/gmt_completion.bash
   export PATH="$PATH:/home/navarro/SOFTWARE/texlive/2015/bin/x86_64-linux"
-  export MANPATH="$MANPATH:/home/navarro/SOFTWARE/texlive/2015/texmf-dist/doc/man/"
+  export MANPATH="$MANPATH:/home/navarro/SOFTWARE/texlive/2015/texmf-dist/doc/man/:/home/navarro/SOFTWARE/local/share/man"
   export INFOPATH="$INFOPATH:/home/navarro/SOFTWARE/texlive/2015/texmf-dist/doc/man/"
   export PATH="$PATH:~/SOFTWARE/MM5"
   export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
@@ -68,6 +68,7 @@ if [[ $HOST =~ "bender" || $HOSTNAME =~ "bender" ]]; then
   alias vpn_unibe_up='sudo /usr/sbin/vpnc VPN2UniBe.conf'
   alias vpn_unibe_down='sudo /usr/sbin/vpnc-disconnect'
   alias unibepc='ssh -X gomez@130.92.143.6'
+  stty -ixon
 fi
 
 ##########################################################################

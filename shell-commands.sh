@@ -37,7 +37,7 @@ if [ $# -eq 2 ]; then
   paste dates data > $2
   rm -f data dates
 else
-  echo "usage ext2serie <filein> <fileout>"
+  echo "usage extfield2serie <filein> <fileout>"
 fi
 }
 

@@ -70,7 +70,9 @@ endw
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "color scheme"{{{
-colorscheme vibrantink
+"colorscheme solarized
+"let g:solarized_termcolors=256
+colorscheme summerfruit256
 " map leader key
 let mapleader = ","
 
@@ -436,8 +438,6 @@ let g:lightline = {
       \   'fileencoding': 'MyFileencoding',
       \   'mode': 'MyMode',
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
 function! MyModified()
