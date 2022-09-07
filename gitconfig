@@ -1,0 +1,17 @@
+[user]
+	name = Juanjo
+	email = juanjo.gomeznavarro@gmail.com
+  signingkey = 96694567
+[core]
+	editor = vim
+	pager = more
+[merge]
+	tool = vimdiff
+[color]
+	ui = true
+[alias]
+	history = log --oneline --graph --all
+[push]
+	default = simple
+[credential]
+	helper = store
