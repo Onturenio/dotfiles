@@ -98,18 +98,18 @@ Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
-" nmap <c-c>v <Plug>SlimeConfig
-nmap <c-c><c-c> <Plug>SlimeCellsSendAndGoToNext
-nmap <c-x><c-x> :SlimeSendCurrentLine<CR>j
-nmap <c-c><c-Down> <Plug>SlimeCellsNext
-nmap <c-c><c-Up> <Plug>SlimeCellsPrev
-xmap <c-c> <Plug>SlimeRegionSend
+" nmap <C-C>v <Plug>SlimeConfig
+nmap <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
+nmap <C-X><C-X> :SlimeSendCurrentLine<CR>j
+nmap <C-C><C-DOWN> <Plug>SlimeCellsNext
+nmap <C-C><C-UP> <Plug>SlimeCellsPrev
+xmap <C-C> <Plug>SlimeRegionSend
 
 nmap [i <Plug>SlimeCellsPrev
 nmap ]i <Plug>SlimeCellsNext
 
 " Autocompletation with YCM
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_comments = 1
@@ -161,19 +161,19 @@ set mouse=a
 set mousemodel=popup
 noremap <ScrollWheelUp> <C-Y>
 noremap <ScrollWheelDown> <C-E>
-inoremap <ScrollWheelUp> <esc><C-Y>a
-inoremap <ScrollWheelDown> <esc><C-E>a
+inoremap <ScrollWheelUp> <C-O><C-Y>
+inoremap <ScrollWheelDown> <C-O><C-E>
 noremap <C-ScrollWheelUp> 3<C-Y>
 noremap <C-ScrollWheelDown> 3<C-E>
-inoremap <C-ScrollWheelUp> <esc>3<C-Y>a
-inoremap <C-ScrollWheelDown> <esc>3<C-E>a
+inoremap <C-ScrollWheelUp> <C-O>3<C-Y>
+inoremap <C-ScrollWheelDown> <C-O>3<C-E>
 
 tnoremap <ScrollWheelUp> <C-\><C-n>
 
 "intuitive cursor movement in insert and visual modes
 set whichwrap=h,l,<,>,[,],s
-inoremap <UP> <c-o>gk
-inoremap <DOWN> <c-o>gj
+inoremap <UP> <C-O>gk
+inoremap <DOWN> <C-O>gj
 vnoremap <LEFT> h
 vnoremap <RIGHT> l
 vnoremap <UP> k
@@ -189,6 +189,10 @@ nnoremap <S-LEFT> <ESC>vb
 inoremap ZZ <ESC>ZZ
 inoremap jk <C-[>
 vnoremap <C-UP> <ESC>
+
+" jump between changes centering scroll"
+nnoremap [c [czz
+nnoremap ]c ]czz
 
 " fast normal-insert modes
 " inoremap <C-UP> <ESC>
@@ -340,14 +344,78 @@ function! Increase() range
   let line=line1
   let cont=1
   while line < line2
-      execute "normal j" . cont . "\<c-a>"
+      execute "normal j" . cont . "\<C-A>"
       let line += 1
       let cont += 1
   endwhile
 endfunction
 
-vnoremap <leader><c-a> :call Increase()<CR>
+vnoremap <leader><C-A> :call Increase()<CR>
 "}}}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AUTOCLOSE BRACKETS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+" taken from https://www.vim.org/scripts/script.php?script_id=2373
+
+inoremap ( ()<C-G>U<left>
+inoremap { {}<C-G>U<left>
+inoremap [ []<C-G>U<left>
+
+vnoremap <leader>" "zdi"<C-R>z"<ESC>
+vnoremap <leader>' "zdi'<C-R>z'<ESC>
+vnoremap <leader>( "zdi(<C-R>z)<ESC>
+vnoremap <leader>[ "zdi[<C-R>z]<ESC>
+vnoremap <leader>{ "zdi{<C-R>z}<ESC>
+
+inoremap <expr> <bs> <SID>delpair()
+
+inoremap <expr> ) <SID>escapepair(')')
+inoremap <expr> } <SID>escapepair('}')
+inoremap <expr> ] <SID>escapepair(']')
+
+inoremap <expr> " <SID>pairquotes('"')
+inoremap <expr> ' <SID>pairquotes("'")
+
+
+function! s:delpair()
+	let l:lst = ['""',"''",'{}','[]','()']
+	let l:col = col('.')
+	let l:line = getline('.')
+	let l:chr = l:line[l:col-2 : l:col-1]
+	if index(l:lst, l:chr) > -1
+		return "\<bs>\<del>"
+	else
+		let l:chr = l:line[l:col-3:l:col-2]
+		if (index(l:lst, l:chr)) > - 1
+			return "\<bs>\<bs>"
+		endif
+		return "\<bs>"
+endf
+
+function! s:escapepair(right)
+	let l:col = col('.')
+	let l:chr = getline('.')[l:col-1]
+	if a:right == l:chr
+		return "\<right>"
+	else
+		return a:right
+
+endf
+
+function! s:pairquotes(pair)
+	let l:col = col('.')
+	let l:line = getline('.')
+	let l:chr = l:line[l:col-1]
+	if a:pair == l:chr
+		return "\<right>"
+	else
+		return a:pair.a:pair."\<left>"
+
+endf"}}}
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "GENERAL OPTIONS
