@@ -138,11 +138,11 @@ let g:airline#extensions#bufferline#enabled = 1
 let g:airline_detect_modified=0
 
 " additional line with open buffers
-Plug 'bling/vim-bufferline'
-let g:bufferline_echo = 0
-autocmd VimEnter *
-  \ let &statusline='%{bufferline#refresh_status()}'
-    \ .bufferline#get_status_string()
+" Plug 'bling/vim-bufferline'
+" let g:bufferline_echo = 0
+" autocmd VimEnter *
+"   \ let &statusline='%{bufferline#refresh_status()}'
+"     \ .bufferline#get_status_string()
 
 
 call plug#end()
