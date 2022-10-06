@@ -58,7 +58,7 @@ alias ecflow_forward_hpc2020="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecf
 [ -f ~/dotfiles/git-completion.bash ] && source ~/dotfiles/git-completion.bash
 
 # laptop specific setup
-[ -f ~/dotfiles/bashrc_mylaptop ] && source ~/dotfiles/my_laptop.sh
+[ -f ~/dotfiles/bashrc_laptop.sh ] && source ~/dotfiles/bashrc_laptop.sh
 
 # ecgate specific setup
 if [[ $HOSTNAME =~ "ecgb11" ]]; then
