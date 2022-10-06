@@ -28,7 +28,6 @@ alias sur="ssh -X pn14@sur.aemet.es"
 alias cirrus="ssh pn14@cirrus.aemet.es"
 alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
 alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
-alias AEMET="conda activate AEMET"
 
 ##########################################################################
 # ECMWF
