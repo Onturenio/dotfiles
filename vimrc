@@ -109,7 +109,7 @@ nmap [i <Plug>SlimeCellsPrev
 nmap ]i <Plug>SlimeCellsNext
 
 " Autocompletation with YCM
-" Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_comments = 1
