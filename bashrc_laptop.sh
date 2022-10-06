@@ -3,6 +3,11 @@
 ##########################################################################
 alias pangea="ssh -X radar@pangea.ogimet.com"
 alias cat='batcat --pager "less -RF" --theme=GitHub'
+alias vpn='sudo openfortivpn -c ~/.vpnconfig'
+alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
+alias aemet='/home/navarro/SOFTWARE/anaconda3/envs/GDAL/bin/python ~/SOFTWARE/aemet.py'
+alias login_shell="tsh login --proxy=shell.ecmwf.int:443"
+alias login_jump="tsh login --proxy=jump.ecmwf.int:443"
 
 source ~/SOFTWARE/cdoCompletion.bash
 source ~/SOFTWARE/gmt_completion.bash
@@ -19,6 +24,16 @@ export PATH="$PATH:~/SOFTWARE/eccodes/bin"
 
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
 
+function passwd_INTERNET {
+if [[ $# == 0 ]]; then
+  gpg -d ~/Dropbox/INTERNET.asc 2> /dev/null | less
+  echo "Type \"gpg -ca file\" to encrypt a file in ASCII"
+elif [[ $# == 1 ]]; then
+  gpg -d ~/Dropbox/INTERNET.asc 2> /dev/null | grep -i $1
+else
+  echo "Usage passwd_INTERNET [filter]"
+fi
+}
 
 # added by Anaconda3 5.3.1 installer
 # >>> conda init >>>

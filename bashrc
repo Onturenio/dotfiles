@@ -13,7 +13,7 @@ export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_DEFAULT_OPTS='--multi --border --height 40%'
 
 # Functions and commands defined elsewhere
-source ~/dotfiles/shell-commands.sh
+# source ~/dotfiles/shell-commands.sh
 # source ~/dotfiles/HOSTNAMES
 
 export PS1="\[\033[32;1m\]\u@\h \w\n> \[\033[0m\]"
@@ -21,13 +21,10 @@ export PS1="\[\033[32;1m\]\u@\h \w\n> \[\033[0m\]"
 ##########################################################################
 # AEMET
 ##########################################################################
-alias vpn='sudo openfortivpn -c ~/.vpnconfig'
-alias aemet='/home/navarro/SOFTWARE/anaconda3/envs/GDAL/bin/python ~/SOFTWARE/aemet.py'
 alias neon="ssh -X pn14@neon.aemet.es"
 alias sur="ssh -X pn14@sur.aemet.es"
 alias cirrus="ssh pn14@cirrus.aemet.es"
 alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
-alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
 
 ##########################################################################
 # ECMWF
@@ -37,9 +34,6 @@ alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
 # directamente desde nuestra máquina hacia ecgate pasando por shell.ecmwf.int.
 # Esto es lo que permite usar SSH y SCP, así como port forwarding para usar ecflow_ui
 # de forma remota y sin usar contraseñas ni keys durante ese dia
-
-alias login_shell="tsh login --proxy=shell.ecmwf.int:443"
-alias login_jump="tsh login --proxy=jump.ecmwf.int:443"
 
 alias ecgate="ssh -Y ecgate"
 alias atos-bologna="ssh -Y hpc-login"
