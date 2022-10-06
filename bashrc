@@ -58,3 +58,7 @@ if [[ $HOSTNAME =~ "ecgb11" ]]; then
   [ -f ~/dotfiles/bashrc_ecgate.sh ] && source ~/dotfiles/bashrc_ecgate.sh
 fi
 
+# bologna specific setup
+if [[ $HOSTNAME =~ "aa" ]]; then
+  [ -f ~/dotfiles/bashrc_bologna.sh ] && source ~/dotfiles/bashrc_bologna.sh
+fi
