@@ -1,6 +1,9 @@
 ################################################################################
 # BOLOGNA
 ################################################################################
+alias hpc='ssh -Y hpc-login'
+alias ecs='ssh -Y ecs'
+
 export EDITOR=/usr/bin/vim
 
 export PS1="\[\033[91;1m\]\u@\h \w\n> \[\033[0m\]"
@@ -20,7 +23,7 @@ function sq {
   else
     user="$1"
   fi
-  squeue -u $user | sort -k 2; squeue -u $user | grep $user | wc -l
+  ssh ecs "squeue -u $user" | sort -k 2; ssh ecs "squeue -u $user" | grep $user | wc -l
 }
 
 
