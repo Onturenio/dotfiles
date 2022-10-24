@@ -36,13 +36,14 @@ alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
 # de forma remota y sin usar contraseñas ni keys durante ese dia
 
 alias ecgate="ssh -Y ecgate"
-alias atos-bologna="ssh -Y hpc-login"
-alias cca="ssh -Y cca"
-alias ccb="ssh -Y ccb"
+alias ecs="ssh -Y ecs-login"
+alias hpc="ssh -Y hpc-login"
 alias ecflow_forward_sp4e="ssh -J sp4e@shell.ecmwf.int,sp4e@ecgate.ecmwf.int sp4e@ecgb-vecf -C -N -L 19876:ecgb-vecf.ecmwf.int:19876"
 alias ecflow_forward_imp="ssh -J sp4e@shell.ecmwf.int,sp4e@ecgate.ecmwf.int sp4e@ecgb-vecf -C -N -L 3655:ecgb11.ecmwf.int:3655"
 alias ecflow_forward_operativo="ssh -J sp4e@shell.ecmwf.int,sp4e@ecgate.ecmwf.int sp4e@ecgb-vecf -C -N -L 2909:ecgb-vecf.ecmwf.int:2909"
-alias ecflow_forward_hpc2020="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-sp4e-001 -N -L3141:localhost:3141"
+alias ecflow_forward_atos_sp4e="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-sp4e-001 -N -L3141:localhost:3141"
+alias ecflow_forward_atos_imp="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-imp-001 -N -L3142:localhost:3141"
+alias ecflow_forward_atos_sp0w="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-sp0w-001 -N -L3143:localhost:3141"
 
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
