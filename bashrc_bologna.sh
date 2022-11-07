@@ -1,6 +1,9 @@
 ################################################################################
 # BOLOGNA
 ################################################################################
+alias hpc='ssh -Y hpc-login'
+alias ecs='ssh -Y ecs'
+
 export EDITOR=/usr/bin/vim
 
 export PS1="\[\033[91;1m\]\u@\h \w\n> \[\033[0m\]"
@@ -20,7 +23,7 @@ function sq {
   else
     user="$1"
   fi
-  squeue -u $user | sort -k 2; squeue -u $user | grep $user | wc -l
+  ssh ecs "squeue -u $user" | sort -k 2; ssh ecs "squeue -u $user" | grep $user | wc -l
 }
 
 
@@ -83,4 +86,24 @@ sk() {
     done < <(echo "$processes")
 }
 
+# GET ACCESS TO ANACONDA SOFTWARE
+activate_anaconda(){
+  export PATH="/perm/sp4e/miniconda3/bin:$PATH"
+  export PS1="(anaconda) $PS1"
+}
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/perm/sp4e/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/perm/sp4e/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/perm/sp4e/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/perm/sp4e/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<<
 
