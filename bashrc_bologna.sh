@@ -1,19 +1,24 @@
 ################################################################################
-# BOLOGNA
+# BOLOGNA specific tweaks for bashrc
 ################################################################################
-alias hpc='ssh -Y hpc-login'
+alias hpc='ssh -Y hpc'
 alias ecs='ssh -Y ecs'
+alias sp0w='ssh -Y sp0w@ecs'
+alias micola='sq sp4e'
 
 export EDITOR=/usr/bin/vim
 
 export PS1="\[\033[91;1m\]\u@\h \w\n> \[\033[0m\]"
-export ECF_HOST="ecflow-gen-$USER-001"
-# export PERM="/perm/ms/es/sp4e"
-# export SCRATCH="/scratch/ms/es/sp4e"
 
+# for Ecflow
+export ECF_HOST="ecflow-gen-$USER-001"
+
+# Options for various applications
 # export LANG=en_US.UTF-8
 # export LC_ALL=en_US.UTF-8
 export R_LIBS_USER="/perm/sp4e/R"
+export FZF_DEFAULT_OPTS='--multi --border --height 100%'
+
 
 # list queues for given user, sp0w by default
 function sq {
@@ -23,73 +28,78 @@ function sq {
   else
     user="$1"
   fi
-  ssh ecs "squeue -u $user" | sort -k 2; ssh ecs "squeue -u $user" | grep $user | wc -l
-}
 
+  # invoque FZF to fyzzy-filter jobs
+  header='HOST    JOBID PARTITION         NAME     USER      STATE       TIME  NODES NODELIST(REASON)'
+  processes=$(_getjobs $user | \
+    fzf --ansi --header="$header" --no-sort --preview "_getjobinfo {1} {2}" --bind "ctrl-r:reload(_getjobs $user)" | \
+    awk '{print $1, $2}')
 
-# skgate() {
-#   local processes=$( \
-#     squeue -u sp0w | grep -v JOBID \
-#     | fzf --no-sort  --multi\
-#     --bind 'ctrl-r:reload(squeue -u sp0w | grep -v JOBID)' \
-#     --header='Press <TAB> or right-click to select, <CTRL-R> to refresh, <ESC> to quit'\
-#     | awk '{print $1}')
-
-#   for p in $processes; do
-#     echo killing $p
-#     ssh sp0w@localhost /usr/local/apps/slurm/18.08.6/bin/scancel $p
-#   done
-# }
-
-_getjobs(){
-  squeue -h -u sp0w | awk '{print "ECGATE", $0}'
-}
-
-_getjobinfo(){
-  if [ "$#" -ne 2 ]; then
-    echo "There must be 1 argument"
-  else
-    if [ $1 = "ECGATE" ]; then
-      var=$(squeue -j $2 -o %all)
-      head=$(echo "$var" | head -1 | tr '\|' '\n' )
-      content=$(echo "$var" | tail -1 | tr '\|' '\n')
-      paste <(echo "$head") <(echo "$content")
-    else
-      host=$(echo $1 | awk '{print tolower($0)}')
-      ssh $host qstat $2 -f
-    fi
-  fi
-}
-
-sk() {
-  local processes=$( \
-    _getjobs | fzf --no-sort  --multi \
-    --bind 'ctrl-r:reload(_getjobs)' \
-    --header='Press <TAB> or right-click to select, <CTRL-R> to refresh, <ESC> to quit' \
-    --preview '_getjobinfo {1} {2}' \
-    | awk '{print $1, $2}')
-
+  # get PIDs reading from first column in processes
+  pids=""
   while
     read line; do
     system=$(echo $line | awk '{print $1}')
     pid=$(echo $line | awk '{print $2}')
-    if [[ $system = "ECGATE" ]]; then
-      echo killing $pid in ECGATE
-      echo ssh sp0w@localhost /usr/local/apps/slurm/18.08.6/bin/scancel $pid
-    elif [[ $system =~ "CC" ]]; then
-      echo killing $pid in $system
-      ssh sp0w@cca qdel -Wforce $pid
+    pids="$pids $pid"
+  done < <(echo "$processes")
+
+  # ask whether to kill jobs or not
+  if [[ "$pids" != " " ]]; then
+    read -p "Want me to kill $pids? [y/N]: " flag
+    if [[ $flag == 'y' ]]; then
+      # killing selected jobs
+      while
+        read line; do
+        system=$(echo $line | awk '{print $1}')
+        pid=$(echo $line | awk '{print $2}')
+        if [[ $system == "ECS" ]]; then
+          host="ecs-login"
+        elif [[ $system =~ "HPC" ]]; then
+          host="hpc-login"
+        fi
+        echo killing $pid in $user@$host
+        ssh -n $user@$host "scancel $pid"
+      done < <(echo "$processes")
     fi
-
-
-      # ssh sp0w@cca qdel -Wforce $p
-    done < <(echo "$processes")
+  else
+    # nothig was selected
+    echo "Nothing selected to be killed"
+  fi
 }
+
+# auxiliary function to get list of jobs in both ECS and HPC
+_getjobs(){
+  format="%.10i %.9P %.12j %.8u %.10T %.10M %.6D %R"
+  ssh ecs-login "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}'
+  ssh hpc-login "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}'
+}
+
+# auxiliary function to get exhaustive info from a given job
+_getjobinfo(){
+  if [ $1 = "ECS" ]; then
+    var=$(ssh ecs-login "squeue -j $2 -o %all")
+    head=$(echo "$var" | head -1 | tr '\|' '\n' )
+    content=$(echo "$var" | tail -1 | tr '\|' '\n')
+    paste <(echo "$head") <(echo "$content")
+  else
+    var=$(ssh hpc-login "squeue -j $2 -o %all")
+    head=$(echo "$var" | head -1 | tr '\|' '\n' )
+    content=$(echo "$var" | tail -1 | tr '\|' '\n')
+    paste <(echo "$head") <(echo "$content")
+  fi
+}
+
+# export functions so they are visible for subprocesses
+export -f _getjobinfo
+export -f _getjobs
 
 # GET ACCESS TO ANACONDA SOFTWARE
 activate_anaconda(){
-  export PATH="/perm/sp4e/miniconda3/bin:$PATH"
-  export PS1="(anaconda) $PS1"
+  # export PATH="/perm/sp4e/miniconda3/bin:$PATH"
+  # export PS1="(anaconda) $PS1"
+  module load conda
+  conda activate vim
 }
 
 # >>> conda initialize >>>
