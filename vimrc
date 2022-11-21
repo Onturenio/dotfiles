@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"PLUGINSS
+"PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 
@@ -93,8 +93,8 @@ Plug 'dense-analysis/ale'
 let g:ale_linters_explicit = 1
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
-Plug 'jpalardy/vim-slime'
-Plug 'Klafyvel/vim-slime-cells'
+" Plug 'jpalardy/vim-slime'
+" Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
@@ -148,6 +148,11 @@ let g:airline_detect_modified=0
 call plug#end()
 "'}}}
 
+
+" figure out hostname
+if hostname() =~ 'bull'
+  let g:system = 'ECMWF'
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
@@ -300,13 +305,21 @@ onoremap E :execute "normal! ?EOF?+1\r:noh\rV/EOF/-1\r"<cr>
 
 " better * and # commands
 function! s:VSetSearch()
-let temp = @@
-norm! gvy
-let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-let @@ = temp
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
 endfunction
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+
+function! s:NSetSearch()
+  let @/ = expand("<cword>")
+endfunction
+" vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+" vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>
+nnoremap * :<C-u>call <SID>NSetSearch()<CR>
+vnoremap # :<C-u>call <SID>NSetSearch()<CR>
 
 " makes posible to use arrows and redo stuff (taken from documentation 'inster.txt')
 inoremap <Left>  <C-G>U<Left>
@@ -431,9 +444,6 @@ set showmode
 set autoindent
 set smartindent
 set smarttab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
 set shiftround
 set showmatch
 set vb
@@ -577,30 +587,46 @@ set laststatus=2
 "{{{
 augroup filetype_python
 autocmd!
-autocmd BufNewFile,BufRead *.py
-\ set tabstop=4
-\     softtabstop=4
-\     shiftwidth=4
-\     textwidth=79
-\     expandtab
-\     autoindent
-\     fileformat=unix
+if g:system == 'ECMWF' 
+  "in ECMWF we use two spaces"
+  autocmd FileType python
+  \ set tabstop=2
+  \     softtabstop=2
+  \     shiftwidth=2
+else
+  "in the rest we use 4"
+  autocmd FileType python
+  \ set tabstop=4
+  \     softtabstop=4
+  \     shiftwidth=4
+endif
 
-autocmd BufNewFile,BufRead *.py let python_highlight_all=1
-autocmd BufNewFile,BufRead *.py syntax on
-autocmd BufNewFile,BufRead *.py hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
-autocmd BufNewFile,BufRead *.py let g:slime_python_ipython = 1
-autocmd BufNewFile,BufRead *.py let g:slime_target = "vimterminal"
-autocmd BufNewFile,BufRead *.py let g:slime_no_mappings = 1
-autocmd BufNewFile,BufRead *.py let g:slime_vimterminal_cmd = g:ipython_exe
-" autocmd BufNewFile,BufRead *.py let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-" autocmd BufNewFile,BufRead *.py let g:slime_dont_ask_default = 1
+autocmd FileType python
+  set   textwidth=79
+  \     expandtab
+  \     autoindent
+  \     fileformat=unix
+
+autocmd FileType python let python_highlight_all=1
+autocmd FileType python syntax on
+autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
+autocmd FileType python let g:slime_python_ipython = 1
+autocmd FileType python let g:slime_target = "vimterminal"
+autocmd FileType python let g:slime_no_mappings = 1
+autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+" autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+" autocmd FileType python let g:slime_dont_ask_default = 1
 "
-autocmd BufNewFile,BufRead *.py let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
-autocmd BufNewFile,BufRead *.py let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265"
-
-autocmd BufNewFile,BufRead *.py nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd BufNewFile,BufRead *.py let g:slime_cell_delimiter = "#%%"
+" autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
+if g:system == 'ECMWF'
+  autocmd FileType python let b:ale_linters = {'python': ['flake8']}
+  autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+else
+  autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
+  autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+endif
+autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd FileType python let g:slime_cell_delimiter = "#%%"
 augroup END
 
 "}}}
@@ -610,12 +636,17 @@ augroup END
 " HANDLE IPYTHON
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+if g:system == 'ECMWF'
+  let g:ipython_exe="/usr/local/apps/python3/3.8.8-01/bin/ipython"
+else
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+endif
+
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
 nnoremap <silent> <leader>P :call <SID>CloseIPython()<CR>
-autocmd BufNewFile,BufRead *.py call <SID>SetIPythonTarget()
+autocmd FileType python call <SID>SetIPythonTarget()
 
-function s:PythonBuffers()
+function! s:PythonBuffers()
   let python_bufs = []
   for bufnr in getbufinfo()
     if getbufvar(bufnr.bufnr, '&filetype') ==# 'python'
