@@ -152,6 +152,8 @@ call plug#end()
 " figure out hostname
 if hostname() =~ 'bull'
   let g:system = 'ECMWF'
+else
+  let g:system = 'OTRO'
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -316,10 +318,10 @@ function! s:NSetSearch()
 endfunction
 " vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
 " vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>
-nnoremap * :<C-u>call <SID>NSetSearch()<CR>
-vnoremap # :<C-u>call <SID>NSetSearch()<CR>
+vnoremap <silent> * :<C-u>call <SID>VSetSearch()<CR>
+vnoremap <silent> # :<C-u>call <SID>VSetSearch()<CR>
+nnoremap <silent> * :<C-u>call <SID>NSetSearch()<CR>
+vnoremap <silent> # :<C-u>call <SID>NSetSearch()<CR>
 
 " makes posible to use arrows and redo stuff (taken from documentation 'inster.txt')
 inoremap <Left>  <C-G>U<Left>
@@ -346,7 +348,7 @@ function! HeaderComment()
   normal k
 endfunction
 
-noremap <leader>hc :call HeaderComment()<cr>
+noremap <silent> <leader>hc :call HeaderComment()<cr>
 
 " Allows to increase numbers in consecutive lines
 function! Increase() range
@@ -363,7 +365,7 @@ function! Increase() range
   endwhile
 endfunction
 
-vnoremap <leader><C-A> :call Increase()<CR>
+vnoremap <silent>  <leader><C-A> :call Increase()<CR>
 "}}}
 
 
@@ -477,23 +479,24 @@ while c <= 'z'
   let c = nr2char(1+char2nr(c))
 endw
 
-"set timeout ttimeoutlen=50
+" set timeout ttimeoutlen=50
 
-"set timeout         " Do time out on mappings and others
-"set timeoutlen=2000 " Wait {num} ms before timing out a mapping
+set timeout         " Do time out on mappings and others
+set timeoutlen=1000 " Wait {num} ms before timing out a mapping
+set ttimeoutlen=50
 
 " When you’re pressing Escape to leave insert mode in the terminal, it will by
 " default take a second or another keystroke to leave insert mode completely
 " and update the statusline. This fixes that. I got this from:
 " https://powerline.readthedocs.org/en/latest/tipstricks.html#vim
-"if !has('gui_running')
-"  set ttimeoutlen=10
-"  augroup FastEscape
-"    autocmd!
-"    au InsertEnter * set timeoutlen=0
-"    au InsertLeave * set timeoutlen=1000
-"  augroup END
-"endif
+if !has('gui_running')
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+  augroup END
+endif
  "}}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -586,47 +589,37 @@ set laststatus=2
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
 augroup filetype_python
-autocmd!
-if g:system == 'ECMWF' 
-  "in ECMWF we use two spaces"
-  autocmd FileType python
-  \ set tabstop=2
-  \     softtabstop=2
-  \     shiftwidth=2
-else
-  "in the rest we use 4"
-  autocmd FileType python
-  \ set tabstop=4
-  \     softtabstop=4
-  \     shiftwidth=4
-endif
+  autocmd!
+  if g:system == 'ECMWF'
+    "in ECMWF we use two spaces"
+    autocmd FileType python set tabstop=2 softtabstop=2 shiftwidth=2
+  else
+    "in the rest we use 4"
+    autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4
+  endif
 
-autocmd FileType python
-  set   textwidth=79
-  \     expandtab
-  \     autoindent
-  \     fileformat=unix
+  autocmd FileType python set textwidth=79 expandtab autoindent fileformat=unix
 
-autocmd FileType python let python_highlight_all=1
-autocmd FileType python syntax on
-autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
-autocmd FileType python let g:slime_python_ipython = 1
-autocmd FileType python let g:slime_target = "vimterminal"
-autocmd FileType python let g:slime_no_mappings = 1
-autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-" autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-" autocmd FileType python let g:slime_dont_ask_default = 1
-"
-" autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
-if g:system == 'ECMWF'
-  autocmd FileType python let b:ale_linters = {'python': ['flake8']}
-  autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
-else
+  autocmd FileType python let python_highlight_all=1
+  autocmd FileType python syntax on
+  autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
+  autocmd FileType python let g:slime_python_ipython = 1
+  autocmd FileType python let g:slime_target = "vimterminal"
+  autocmd FileType python let g:slime_no_mappings = 1
+  autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+  autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+  autocmd FileType python let g:slime_dont_ask_default = 1
+
   autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
-  autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
-endif
-autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd FileType python let g:slime_cell_delimiter = "#%%"
+  if g:system == 'ECMWF'
+    autocmd FileType python let b:ale_linters = {'python': ['flake8']}
+    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+  else
+    autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
+    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+  endif
+  autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+  autocmd FileType python let g:slime_cell_delimiter = "#%%"
 augroup END
 
 "}}}
