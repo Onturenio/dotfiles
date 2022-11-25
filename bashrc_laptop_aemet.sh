@@ -1,5 +1,5 @@
 alias pangea="ssh -X radar@pangea.ogimet.com"
-alias cat='batcat --pager "less -RF" --theme=GitHub'
+# alias cat='batcat --pager "less -RF" --theme=GitHub'
 alias vpn='sudo openfortivpn -c ~/.vpnconfig'
 alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
 # alias aemet='/home/navarro/SOFTWARE/anaconda3/envs/GDAL/bin/python ~/SOFTWARE/aemet.py'
@@ -12,6 +12,17 @@ export INFOPATH="$INFOPATH:/opt/texlive/2022/texmf-dist/doc/info"
 # export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
 
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
+
+function ectoken {
+    sha1=$(cat ~/dotfiles/token_ecmwf)
+    passwd=$(oathtool -b --digits=6 --totp=sha1 "$sha1")
+    echo TOTP: $passwd
+}
+
+function eclogin {
+        ectoken
+        teleport-login
+}
 
 function passwd_INTERNET {
 if [[ $# == 0 ]]; then
