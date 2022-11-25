@@ -96,24 +96,6 @@ export -f _getjobs
 
 # GET ACCESS TO ANACONDA SOFTWARE
 activate_anaconda(){
-  # export PATH="/perm/sp4e/miniconda3/bin:$PATH"
-  # export PS1="(anaconda) $PS1"
   module load conda
   conda activate vim
 }
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/perm/sp4e/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/perm/sp4e/miniconda3/etc/profile.d/conda.sh" ]; then
-#         . "/perm/sp4e/miniconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/perm/sp4e/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
-# <<< conda initialize <<<
-

@@ -458,6 +458,9 @@ set hidden
 set wildmenu
 set splitbelow
 set termguicolors
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -593,9 +596,6 @@ augroup filetype_python
   if g:system == 'ECMWF'
     "in ECMWF we use two spaces"
     autocmd FileType python set tabstop=2 softtabstop=2 shiftwidth=2
-  else
-    "in the rest we use 4"
-    autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4
   endif
 
   autocmd FileType python set textwidth=79 expandtab autoindent fileformat=unix
