@@ -155,6 +155,8 @@ call plug#end()
 " figure out hostname
 if hostname() =~ 'bull'
   let g:system = 'ECMWF'
+elseif hostname() =~ 'bender2'
+  let g:system = 'BENDER2'
 else
   let g:system = 'OTRO'
 endif
@@ -643,6 +645,8 @@ augroup END
 "{{{
 if g:system == 'ECMWF'
   let g:ipython_exe="/usr/local/apps/python3/3.8.8-01/bin/ipython"
+elseif g:system == 'BENDER2'
+  let g:ipython_exe="/opt/miniconda3/envs/mr/bin/ipython"
 else
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
 endif
