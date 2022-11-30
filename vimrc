@@ -93,8 +93,8 @@ Plug 'dense-analysis/ale'
 let g:ale_linters_explicit = 1
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
-" Plug 'jpalardy/vim-slime'
-" Plug 'Klafyvel/vim-slime-cells'
+Plug 'jpalardy/vim-slime'
+Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
@@ -152,6 +152,8 @@ call plug#end()
 " figure out hostname
 if hostname() =~ 'bull'
   let g:system = 'ECMWF'
+elseif hostname() =~ 'bender2'
+  let g:system = 'BENDER2'
 else
   let g:system = 'OTRO'
 endif
@@ -631,6 +633,8 @@ augroup END
 "{{{
 if g:system == 'ECMWF'
   let g:ipython_exe="/usr/local/apps/python3/3.8.8-01/bin/ipython"
+elseif g:system == 'BENDER2'
+  let g:ipython_exe="/opt/miniconda3/envs/mr/bin/ipython"
 else
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
 endif
