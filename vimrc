@@ -6,9 +6,12 @@
 " let vim-plugin to handle plugins
 call plug#begin('~/.vim/bundle')
 
+" useful suround shotcuts
+Plug 'tpope/vim-surround'
+
 " set of standard default options
 Plug 'tpope/vim-sensible'
-"
+
 " useful shortcuts
 Plug 'tpope/vim-unimpaired'
 
@@ -93,20 +96,20 @@ Plug 'dense-analysis/ale'
 let g:ale_linters_explicit = 1
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
-" Plug 'jpalardy/vim-slime'
-" Plug 'Klafyvel/vim-slime-cells'
+Plug 'jpalardy/vim-slime'
+Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
 " nmap <C-C>v <Plug>SlimeConfig
-nmap <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
-nmap <C-X><C-X> :SlimeSendCurrentLine<CR>j
-nmap <C-C><C-DOWN> <Plug>SlimeCellsNext
-nmap <C-C><C-UP> <Plug>SlimeCellsPrev
-xmap <C-C> <Plug>SlimeRegionSend
+nmap <silent> <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
+nmap <silent> <C-X><C-X> :SlimeSendCurrentLine<CR>j
+nmap <silent> <C-C><C-DOWN> <Plug>SlimeCellsNext
+nmap <silent> <C-C><C-UP> <Plug>SlimeCellsPrev
+xmap <silent> <C-C> <Plug>SlimeRegionSend
 
-nmap [i <Plug>SlimeCellsPrev
-nmap ]i <Plug>SlimeCellsNext
+nmap <silent> [i <Plug>SlimeCellsPrev
+nmap <silent> ]i <Plug>SlimeCellsNext
 
 " Autocompletation with YCM
 Plug 'Valloric/YouCompleteMe'
@@ -603,17 +606,26 @@ augroup filetype_python
   autocmd FileType python let python_highlight_all=1
   autocmd FileType python syntax on
   autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
-  autocmd FileType python let g:slime_python_ipython = 1
-  autocmd FileType python let g:slime_target = "vimterminal"
-  autocmd FileType python let g:slime_no_mappings = 1
-  autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-  autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-  autocmd FileType python let g:slime_dont_ask_default = 1
+  if g:system == "ECMWF"
+    autocmd FileType python let g:slime_python_ipython = 1
+    autocmd FileType python let g:slime_target = "screen"
+    autocmd FileType python let g:slime_no_mappings = 1
+    " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_dont_ask_default = 1
+  else
+    autocmd FileType python let g:slime_python_ipython = 1
+    autocmd FileType python let g:slime_target = "vimterminal"
+    autocmd FileType python let g:slime_no_mappings = 1
+    autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_dont_ask_default = 1
+  endif
 
   autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
   if g:system == 'ECMWF'
     autocmd FileType python let b:ale_linters = {'python': ['flake8']}
-    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111,E114"
   else
     autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
     autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
