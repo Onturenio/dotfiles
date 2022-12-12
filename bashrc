@@ -61,6 +61,11 @@ if [ $(hostname) == 'bender2' ]; then
     [ -f ~/dotfiles/bashrc_laptop_aemet.sh ] && source ~/dotfiles/bashrc_laptop_aemet.sh
 fi
 
+# # desktop Aemet specific setup
+if [ $(hostname) == 'AEMET' ]; then
+    [ -f ~/dotfiles/bashrc_dektop_aemet.sh ] && source ~/dotfiles/bashrc_dektop_aemet.sh
+fi
+
 # ecgate specific setup
 if [[ $HOSTNAME =~ "ecgb11" ]]; then
   [ -f ~/dotfiles/bashrc_ecgate.sh ] && source ~/dotfiles/bashrc_ecgate.sh
