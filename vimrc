@@ -1,3 +1,12 @@
+" figure out hostname
+if hostname() =~ 'bull'
+  let g:system = 'ECMWF'
+elseif hostname() =~ 'pangea'
+  let g:system = 'PANGEA'
+else
+  let g:system = 'OTRO'
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -93,8 +102,8 @@ Plug 'dense-analysis/ale'
 let g:ale_linters_explicit = 1
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
-" Plug 'jpalardy/vim-slime'
-" Plug 'Klafyvel/vim-slime-cells'
+Plug 'jpalardy/vim-slime'
+Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
@@ -109,7 +118,9 @@ nmap [i <Plug>SlimeCellsPrev
 nmap ]i <Plug>SlimeCellsNext
 
 " Autocompletation with YCM
-Plug 'Valloric/YouCompleteMe'
+if g:system != 'PANGEA'
+  Plug 'Valloric/YouCompleteMe'
+endif
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_comments = 1
@@ -148,13 +159,6 @@ let g:airline_detect_modified=0
 call plug#end()
 "'}}}
 
-
-" figure out hostname
-if hostname() =~ 'bull'
-  let g:system = 'ECMWF'
-else
-  let g:system = 'OTRO'
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
@@ -206,10 +210,11 @@ nnoremap ]c ]czz
 "nnoremap <C-DOWN> i
 
 " train myself to use hjkl in normal mode
-" noremap <left> <nop>
-" nnoremap <right> <nop>
-" nnoremap <up> <nop>
-" nnoremap <down> <nop>
+nnoremap <Left>  :echo "Don't use the cursors!"<CR>
+nnoremap <Right> :echo "Don't use the cursors!"<CR>
+nnoremap <Up>    :echo "Don't use the cursors!"<CR>
+nnoremap <Down>  :echo "Don't use the cursors!"<CR>
+
 " inoremap <esc> <nop>
 " inoremap <silent> <expr> <ESC> <nop>
 
@@ -631,6 +636,8 @@ augroup END
 "{{{
 if g:system == 'ECMWF'
   let g:ipython_exe="/usr/local/apps/python3/3.8.8-01/bin/ipython"
+elseif  g:system == 'PANGEA'
+  let g:ipython_exe="/home/radar/SOFTWARE/anaconda3/envs/test2/bin/ipython"
 else
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
 endif

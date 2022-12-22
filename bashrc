@@ -71,3 +71,7 @@ if [[ $HOSTNAME =~ "aa" || $HOSTNAME =~ "ab" || $HOSTNAME =~ "ac" || $HOSTNAME =
   [ -f ~/dotfiles/bashrc_bologna.sh ] && source ~/dotfiles/bashrc_bologna.sh
 fi
 
+# generic setup
+if [[ $HOSTNAME =~ "pangea" ]]; then
+  [ -f ~/dotfiles/bashrc_pangea.sh ] && source ~/dotfiles/bashrc_pangea.sh
+fi
