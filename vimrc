@@ -211,10 +211,10 @@ nnoremap ]c ]czz
 "nnoremap <C-DOWN> i
 
 " train myself to use hjkl in normal mode
-" noremap <left> <nop>
-" nnoremap <right> <nop>
-" nnoremap <up> <nop>
-" nnoremap <down> <nop>
+nnoremap <Left>  :echo "Don't use the cursors!"<CR>
+nnoremap <Right> :echo "Don't use the cursors!"<CR>
+nnoremap <Up>    :echo "Don't use the cursors!"<CR>
+nnoremap <Down>  :echo "Don't use the cursors!"<CR>
 " inoremap <esc> <nop>
 " inoremap <silent> <expr> <ESC> <nop>
 
