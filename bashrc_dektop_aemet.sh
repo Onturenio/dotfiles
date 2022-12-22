@@ -1,4 +1,4 @@
-pangea="ssh -X radar@pangea.ogimet.com"
+alias pangea="ssh -X radar@pangea.ogimet.com"
 # alias cat='batcat --pager "less -RF" --theme=GitHub'
 alias vpn='sudo openfortivpn -c ~/.vpnconfig'
 alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
