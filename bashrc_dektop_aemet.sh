@@ -19,10 +19,6 @@ function ectoken {
     echo TOTP: $passwd
 }
 
-function eclogin {
-        ectoken
-        teleport-login
-}
 
 function passwd_INTERNET {
 if [[ $# == 0 ]]; then
