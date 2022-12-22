@@ -15,9 +15,12 @@ endif
 " let vim-plugin to handle plugins
 call plug#begin('~/.vim/bundle')
 
+" useful suround shotcuts
+Plug 'tpope/vim-surround'
+
 " set of standard default options
 Plug 'tpope/vim-sensible'
-"
+
 " useful shortcuts
 Plug 'tpope/vim-unimpaired'
 
@@ -108,14 +111,14 @@ let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 let g:slime_no_mappings = 1
 " nmap <C-C>v <Plug>SlimeConfig
-nmap <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
-nmap <C-X><C-X> :SlimeSendCurrentLine<CR>j
-nmap <C-C><C-DOWN> <Plug>SlimeCellsNext
-nmap <C-C><C-UP> <Plug>SlimeCellsPrev
-xmap <C-C> <Plug>SlimeRegionSend
+nmap <silent> <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
+nmap <silent> <C-X><C-X> :SlimeSendCurrentLine<CR>j
+nmap <silent> <C-C><C-DOWN> <Plug>SlimeCellsNext
+nmap <silent> <C-C><C-UP> <Plug>SlimeCellsPrev
+xmap <silent> <C-C> <Plug>SlimeRegionSend
 
-nmap [i <Plug>SlimeCellsPrev
-nmap ]i <Plug>SlimeCellsNext
+nmap <silent> [i <Plug>SlimeCellsPrev
+nmap <silent> ]i <Plug>SlimeCellsNext
 
 " Autocompletation with YCM
 if g:system != 'PANGEA'
@@ -159,6 +162,15 @@ let g:airline_detect_modified=0
 call plug#end()
 "'}}}
 
+
+" figure out hostname
+if hostname() =~ 'bull'
+  let g:system = 'ECMWF'
+elseif hostname() =~ 'bender2'
+  let g:system = 'BENDER2'
+else
+  let g:system = 'OTRO'
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
@@ -214,7 +226,6 @@ nnoremap <Left>  :echo "Don't use the cursors!"<CR>
 nnoremap <Right> :echo "Don't use the cursors!"<CR>
 nnoremap <Up>    :echo "Don't use the cursors!"<CR>
 nnoremap <Down>  :echo "Don't use the cursors!"<CR>
-
 " inoremap <esc> <nop>
 " inoremap <silent> <expr> <ESC> <nop>
 
@@ -463,6 +474,9 @@ set hidden
 set wildmenu
 set splitbelow
 set termguicolors
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -598,9 +612,6 @@ augroup filetype_python
   if g:system == 'ECMWF'
     "in ECMWF we use two spaces"
     autocmd FileType python set tabstop=2 softtabstop=2 shiftwidth=2
-  else
-    "in the rest we use 4"
-    autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4
   endif
 
   autocmd FileType python set textwidth=79 expandtab autoindent fileformat=unix
@@ -608,17 +619,26 @@ augroup filetype_python
   autocmd FileType python let python_highlight_all=1
   autocmd FileType python syntax on
   autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
-  autocmd FileType python let g:slime_python_ipython = 1
-  autocmd FileType python let g:slime_target = "vimterminal"
-  autocmd FileType python let g:slime_no_mappings = 1
-  autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-  autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-  autocmd FileType python let g:slime_dont_ask_default = 1
+  if g:system == "ECMWF"
+    autocmd FileType python let g:slime_python_ipython = 1
+    autocmd FileType python let g:slime_target = "screen"
+    autocmd FileType python let g:slime_no_mappings = 1
+    " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_dont_ask_default = 1
+  else
+    autocmd FileType python let g:slime_python_ipython = 1
+    autocmd FileType python let g:slime_target = "vimterminal"
+    autocmd FileType python let g:slime_no_mappings = 1
+    autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_dont_ask_default = 1
+  endif
 
   autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
   if g:system == 'ECMWF'
     autocmd FileType python let b:ale_linters = {'python': ['flake8']}
-    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111,E114"
   else
     autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
     autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
@@ -638,6 +658,8 @@ if g:system == 'ECMWF'
   let g:ipython_exe="/usr/local/apps/python3/3.8.8-01/bin/ipython"
 elseif  g:system == 'PANGEA'
   let g:ipython_exe="/home/radar/SOFTWARE/anaconda3/envs/test2/bin/ipython"
+elseif g:system == 'BENDER2'
+  let g:ipython_exe="/opt/miniconda3/envs/mr/bin/ipython"
 else
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
 endif

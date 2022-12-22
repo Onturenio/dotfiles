@@ -61,13 +61,18 @@ if [ $(hostname) == 'bender2' ]; then
     [ -f ~/dotfiles/bashrc_laptop_aemet.sh ] && source ~/dotfiles/bashrc_laptop_aemet.sh
 fi
 
+# # desktop Aemet specific setup
+if [ $(hostname) == 'AEMET' ]; then
+    [ -f ~/dotfiles/bashrc_dektop_aemet.sh ] && source ~/dotfiles/bashrc_dektop_aemet.sh
+fi
+
 # ecgate specific setup
 if [[ $HOSTNAME =~ "ecgb11" ]]; then
   [ -f ~/dotfiles/bashrc_ecgate.sh ] && source ~/dotfiles/bashrc_ecgate.sh
 fi
 
 # bologna specific setup
-if [[ $HOSTNAME =~ "aa" || $HOSTNAME =~ "ab" || $HOSTNAME =~ "ac" || $HOSTNAME =~ "lfcm" ]]; then
+if [[ $HOSTNAME =~ "aa" || $HOSTNAME =~ "ab" || $HOSTNAME =~ "ac" || $HOSTNAME =~ "ad" || $HOSTNAME =~ "lfcm" ]]; then
   [ -f ~/dotfiles/bashrc_bologna.sh ] && source ~/dotfiles/bashrc_bologna.sh
 fi
 
