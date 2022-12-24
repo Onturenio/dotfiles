@@ -30,11 +30,6 @@ function ectoken {
     echo TOTP: $passwd
 }
 
-function eclogin {
-    ectoken
-    teleport-login
-}
-
 function passwd_INTERNET {
 if [[ $# == 0 ]]; then
   gpg -d ~/Dropbox/INTERNET.asc 2> /dev/null | less
