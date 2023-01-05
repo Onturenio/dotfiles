@@ -127,6 +127,7 @@ endif
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_comments = 1
+let g:ycm_auto_hover = ''
 
 " colores
 " Plugin 'xolox/vim-misc'
@@ -512,7 +513,7 @@ if !has('gui_running')
   set ttimeoutlen=10
   augroup FastEscape
     autocmd!
-    au InsertEnter * set timeoutlen=0
+    " au InsertEnter * set timeoutlen=200
     au InsertLeave * set timeoutlen=1000
   augroup END
 endif
