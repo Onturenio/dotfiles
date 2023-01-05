@@ -3,6 +3,8 @@ if hostname() =~ 'bull'
   let g:system = 'ECMWF'
 elseif hostname() =~ 'pangea'
   let g:system = 'PANGEA'
+elseif hostname() =~ 'bender2'
+  let g:system = 'BENDER2'
 else
   let g:system = 'OTRO'
 endif
@@ -163,15 +165,6 @@ let g:airline_detect_modified=0
 call plug#end()
 "'}}}
 
-
-" figure out hostname
-if hostname() =~ 'bull'
-  let g:system = 'ECMWF'
-elseif hostname() =~ 'bender2'
-  let g:system = 'BENDER2'
-else
-  let g:system = 'OTRO'
-endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
