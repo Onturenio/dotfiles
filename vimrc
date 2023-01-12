@@ -70,6 +70,8 @@ Plug 'vim-scripts/indentpython.vim'
 
 " Latex integration
 Plug 'LaTeX-Box-Team/LaTeX-Box'
+" let g:LatexBox_Folding = 1
+" let g:LatexBox_fold_envs = 0
 
 " Markdown integration
 Plug 'vim-pandoc/vim-pandoc'
@@ -379,7 +381,8 @@ vnoremap <silent>  <leader><C-A> :call Increase()<CR>
 "}}}
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"tex
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AUTOCLOSE BRACKETS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
@@ -640,7 +643,6 @@ augroup filetype_python
   autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
   autocmd FileType python let g:slime_cell_delimiter = "#%%"
 augroup END
-
 "}}}
 
 
