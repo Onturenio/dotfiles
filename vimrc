@@ -737,8 +737,8 @@ endfunction
  augroup LatexFile
    autocmd Filetype tex let b:commentchar = '%'
    autocmd Filetype tex set spell
-   nnoremap <C-C><C-C> :w<CR>:Latexmk<CR>
-   nnoremap <C-X><C-X> :LatexView<CR>
+   autocmd Filetype tex nnoremap <C-C><C-C> :w<CR>:Latexmk<CR>
+   autocmd Filetype tex nnoremap <C-X><C-X> :LatexView<CR>
  augroup END
 
 colorscheme github
