@@ -5,6 +5,8 @@ elseif hostname() =~ 'pangea'
   let g:system = 'PANGEA'
 elseif hostname() =~ 'bender2'
   let g:system = 'BENDER2'
+elseif hostname() =~ 'AEMET'
+  let g:system = 'AEMET'
 else
   let g:system = 'OTRO'
 endif
@@ -253,6 +255,9 @@ nnoremap <C-LEFT> ma<<`ahh
 " easy fold/unfold with space key
 nnoremap <SPACE> za
 vnoremap <SPACE> zf
+
+" map to invoque Copilot
+nnoremap <leader>cp :Copilot<CR>
 
 nnoremap <leader>f :call FoldColumnToggle()<cr>
 
@@ -523,7 +528,7 @@ endif
  augroup VimFile
    autocmd Filetype vim let b:commentchar = '"'
    autocmd Filetype vim set foldmethod=marker
-   autocmd Filetype vim set shiftwidth=2
+   autocmd Filetype vim setlocal shiftwidth=2
  augroup END
 
 :nnoremap <leader>ev :split $MYVIMRC<cr>
@@ -657,6 +662,8 @@ elseif  g:system == 'PANGEA'
   let g:ipython_exe="/home/radar/SOFTWARE/anaconda3/envs/test2/bin/ipython"
 elseif g:system == 'BENDER2'
   let g:ipython_exe="/opt/miniconda3/envs/mr/bin/ipython"
+elseif g:system == 'AEMET'
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
 endif
@@ -722,6 +729,17 @@ function! s:ToggleIPython()
 endfunction
 
 "}}}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" HANDLE LATEX
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ augroup LatexFile
+   autocmd Filetype tex let b:commentchar = '%'
+   autocmd Filetype tex set spell
+   autocmd Filetype tex nnoremap <C-C><C-C> :w<CR>:Latexmk<CR>
+   autocmd Filetype tex nnoremap <C-X><C-X> :LatexView<CR>
+ augroup END
 
 colorscheme github
 
