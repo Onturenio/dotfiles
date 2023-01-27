@@ -394,61 +394,62 @@ vnoremap <silent>  <leader><C-A> :call Increase()<CR>
 "{{{
 " taken from https://www.vim.org/scripts/script.php?script_id=2373
 
-inoremap ( ()<C-G>U<left>
-inoremap { {}<C-G>U<left>
-inoremap [ []<C-G>U<left>
+" inoremap ( ()<C-G>U<left>
+" inoremap { {}<C-G>U<left>
+" inoremap [ []<C-G>U<left>
 
-vnoremap <leader>" "zdi"<C-R>z"<ESC>
-vnoremap <leader>' "zdi'<C-R>z'<ESC>
-vnoremap <leader>( "zdi(<C-R>z)<ESC>
-vnoremap <leader>[ "zdi[<C-R>z]<ESC>
-vnoremap <leader>{ "zdi{<C-R>z}<ESC>
+" vnoremap <leader>" "zdi"<C-R>z"<ESC>
+" vnoremap <leader>' "zdi'<C-R>z'<ESC>
+" vnoremap <leader>( "zdi(<C-R>z)<ESC>
+" vnoremap <leader>[ "zdi[<C-R>z]<ESC>
+" vnoremap <leader>{ "zdi{<C-R>z}<ESC>
 
-inoremap <expr> <bs> <SID>delpair()
+" inoremap <expr> <bs> <SID>delpair()
 
-inoremap <expr> ) <SID>escapepair(')')
-inoremap <expr> } <SID>escapepair('}')
-inoremap <expr> ] <SID>escapepair(']')
+" inoremap <expr> ) <SID>escapepair(')')
+" inoremap <expr> } <SID>escapepair('}')
+" inoremap <expr> ] <SID>escapepair(']')
 
-inoremap <expr> " <SID>pairquotes('"')
-inoremap <expr> ' <SID>pairquotes("'")
+" inoremap <expr> " <SID>pairquotes('"')
+" inoremap <expr> ' <SID>pairquotes("'")
 
 
-function! s:delpair()
-	let l:lst = ['""',"''",'{}','[]','()']
-	let l:col = col('.')
-	let l:line = getline('.')
-	let l:chr = l:line[l:col-2 : l:col-1]
-	if index(l:lst, l:chr) > -1
-		return "\<bs>\<del>"
-	else
-		let l:chr = l:line[l:col-3:l:col-2]
-		if (index(l:lst, l:chr)) > - 1
-			return "\<bs>\<bs>"
-		endif
-		return "\<bs>"
-endf
+" function! s:delpair()
+" 	let l:lst = ['""',"''",'{}','[]','()']
+" 	let l:col = col('.')
+" 	let l:line = getline('.')
+" 	let l:chr = l:line[l:col-2 : l:col-1]
+" 	if index(l:lst, l:chr) > -1
+" 		return "\<bs>\<del>"
+" 	else
+" 		let l:chr = l:line[l:col-3:l:col-2]
+" 		if (index(l:lst, l:chr)) > - 1
+" 			return "\<bs>\<bs>"
+" 		endif
+" 		return "\<bs>"
+" endf
 
-function! s:escapepair(right)
-	let l:col = col('.')
-	let l:chr = getline('.')[l:col-1]
-	if a:right == l:chr
-		return "\<right>"
-	else
-		return a:right
+" function! s:escapepair(right)
+" 	let l:col = col('.')
+" 	let l:chr = getline('.')[l:col-1]
+" 	if a:right == l:chr
+" 		return "\<right>"
+" 	else
+" 		return a:right
 
-endf
+" endf
 
-function! s:pairquotes(pair)
-	let l:col = col('.')
-	let l:line = getline('.')
-	let l:chr = l:line[l:col-1]
-	if a:pair == l:chr
-		return "\<right>"
-	else
-		return a:pair.a:pair."\<left>"
+" function! s:pairquotes(pair)
+" 	let l:col = col('.')
+" 	let l:line = getline('.')
+" 	let l:chr = l:line[l:col-1]
+" 	if a:pair == l:chr
+" 		return "\<right>"
+" 	else
+" 		return a:pair.a:pair."\<left>"
 
-endf"}}}
+" endf
+"}}}
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
