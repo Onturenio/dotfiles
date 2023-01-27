@@ -14,3 +14,6 @@ vnoremap <leader>b "ac\textbf{<C-r>a}<esc>
 " nnoremap <leader>a bi\alert{<esc>ea}<esc>
 " nnoremap <leader>i bi\textit{<esc>ea}<esc>
 " nnoremap <leader>b bi\textbf{<esc>ea}<esc>
+"
+nnoremap <C-C><C-C> :w<CR> :Latexmk<CR>
+nnoremap <C-X><C-X> :LatexView<CR>

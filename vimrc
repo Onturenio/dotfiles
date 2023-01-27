@@ -163,6 +163,7 @@ let g:airline_detect_modified=0
 "   \ let &statusline='%{bufferline#refresh_status()}'
 "     \ .bufferline#get_status_string()
 
+Plug 'github/copilot.vim'
 
 call plug#end()
 "'}}}
