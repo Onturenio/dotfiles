@@ -14,7 +14,18 @@ export INFOPATH="$INFOPATH:/opt/texlive/2022/texmf-dist/doc/info"
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
 
 function ectoken {
-    sha1=$(cat ~/dotfiles/token_ecmwf)
+    if [[ $1 == "sp4e" ]] ; then
+        sha1=$(awk '/sp4e/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        echo "sp4e"
+    elif [[ $1 == "sp0w" ]] ; then
+        sha1=$(awk '/sp0w/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        echo "sp0w"
+    else
+        echo "ERROR: user not found"
+        return 1
+    fi
+    # echo $sha1
+    # return 0
     passwd=$(oathtool -b --digits=6 --totp=sha1 "$sha1")
     echo TOTP: $passwd
 }
