@@ -666,7 +666,8 @@ elseif g:system == 'BENDER2'
 elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
 endif
 
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
