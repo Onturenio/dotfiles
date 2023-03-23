@@ -167,6 +167,12 @@ let g:airline_detect_modified=0
 
 Plug 'github/copilot.vim'
 
+let g:copilot_filetypes = {
+    \ 'gitcommit': v:true,
+    \ 'markdown': v:true,
+    \ 'yaml': v:true
+    \ }
+
 call plug#end()
 "'}}}
 
@@ -639,13 +645,14 @@ augroup filetype_python
     autocmd FileType python let g:slime_dont_ask_default = 1
   endif
 
-  autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
+  autocmd FileType python let g:ale_virtualtext_cursor = 'disabled'
   if g:system == 'ECMWF'
-    autocmd FileType python let b:ale_linters = {'python': ['flake8']}
-    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111,E114"
+    autocmd FileType python let g:ale_linters = {'python': ['ruff']}
+    " autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111,E114"
   else
-    autocmd FileType python let b:ale_linters = {'python': ['flake8', 'pydocstyle']}
-    autocmd FileType python let b:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
+    " autocmd FileType python let g:ale_linters = {'python': ['flake8', 'pydocstyle']}
+    autocmd FileType python let b:ale_linters = {'python': ['ruff', 'pydocstyle']}
+    autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
   endif
   autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
   autocmd FileType python let g:slime_cell_delimiter = "#%%"
@@ -666,8 +673,8 @@ elseif g:system == 'BENDER2'
 elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
 endif
 
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
