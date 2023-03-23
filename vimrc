@@ -651,7 +651,7 @@ augroup filetype_python
     " autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111,E114"
   else
     " autocmd FileType python let g:ale_linters = {'python': ['flake8', 'pydocstyle']}
-    autocmd FileType python let b:ale_linters = {'python': ['ruff', 'pydocstyle']}
+    autocmd FileType python let g:ale_linters = {'python': ['ruff', 'pydocstyle']}
     autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
   endif
   autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
