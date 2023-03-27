@@ -1,0 +1,9 @@
+{
+"pylsp.linting.pydoctstyleEnabled": false,
+"pylsp.plugins.pycodestyle.enabled": false,
+"pylsp.plugins.flake8.enabled": true,
+"pylsp.plugins.flake8.ignore": ["E265", "E266"],
+"pylsp.plugins.pydocstyle.enabled": true,
+"pylsp.plugins.yapf.enabled": true,
+"diagnostic.messageTarget": "float",
+"diagnostic.checkCurrentLine": true}
