@@ -136,14 +136,16 @@ let g:lightline = { 'colorscheme': 'github' }
 "
 " gruvbox colorscheme
 Plug 'morhetz/gruvbox'
+" Plug 'NLKNguyen/papercolor-theme'
 
 " Airline information line
 Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = "dark"
 let g:airline_theme = "gruvbox"
+" let g:airline_theme = "papercolor"
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#format = 2
@@ -828,6 +830,6 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
 
+set background=dark
 colorscheme github
 " colorscheme gruvbox
-set background=dark
