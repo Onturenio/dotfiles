@@ -1,9 +1,9 @@
 ################################################################################
 # BOLOGNA specific tweaks for bashrc
 ################################################################################
-alias hpc='ssh -Y hpc'
-alias ecs='ssh -Y ecs'
-alias sp0w='ssh -Y sp0w@ecs'
+alias hpc='ssh -Y hpc-login'
+alias ecs='ssh -Y ecs-login'
+alias sp0w='ssh -Y sp0w@ecs-login'
 alias micola='sq sp4e'
 
 export EDITOR=/usr/bin/vim
@@ -71,19 +71,19 @@ function sq {
 # auxiliary function to get list of jobs in both ECS and HPC
 _getjobs(){
   format="%.10i %.9P %.12j %.8u %.10T %.10M %.6D %R"
-  ssh ecs-login "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}'
-  ssh hpc-login "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}'
+  ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}'
+  ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}'
 }
 
 # auxiliary function to get exhaustive info from a given job
 _getjobinfo(){
   if [ $1 = "ECS" ]; then
-    var=$(ssh ecs-login "squeue -j $2 -o %all")
+    var=$(ssh ecs-batch "squeue -j $2 -o %all")
     head=$(echo "$var" | head -1 | tr '\|' '\n' )
     content=$(echo "$var" | tail -1 | tr '\|' '\n')
     paste <(echo "$head") <(echo "$content")
   else
-    var=$(ssh hpc-login "squeue -j $2 -o %all")
+    var=$(ssh hpc-batch "squeue -j $2 -o %all")
     head=$(echo "$var" | head -1 | tr '\|' '\n' )
     content=$(echo "$var" | tail -1 | tr '\|' '\n')
     paste <(echo "$head") <(echo "$content")
