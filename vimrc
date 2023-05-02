@@ -461,7 +461,7 @@ filetype indent on
 set nocompatible
 syntax on
 set number
-set relativenumber
+" set relativenumber
 set showcmd
 set showmode
 set autoindent
@@ -668,8 +668,8 @@ elseif g:system == 'BENDER2'
 elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
 endif
 
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
@@ -770,6 +770,8 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " <C-g>u breaks current undo, please make your own choice
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" make <esc> to clear completion item
+inoremap <silent><expr> <Esc> coc#pum#visible() ? coc#pum#cancel() : "\<esc>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1

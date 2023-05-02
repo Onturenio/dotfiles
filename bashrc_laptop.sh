@@ -68,4 +68,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# activate copilot CLI
+eval "$(github-copilot-cli alias -- "$0")"
+
 conda activate AEMET
+
+# create OPENAI_API_KEY
+source ~/dotfiles/openai.sh
