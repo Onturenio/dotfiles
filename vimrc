@@ -103,6 +103,10 @@ xmap <C-d> gc
 
 " Static code analysis with CoC
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'yaegassy/coc-ruff', {'do': 'yarn install --frozen-lockfile'}
+Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
+
+
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
 Plug 'jpalardy/vim-slime'
@@ -130,12 +134,12 @@ nmap <silent> ]i <Plug>SlimeCellsNext
 "let g:ycm_auto_hover = ''
 
 " github colors
-Plug 'cormacrelf/vim-colors-github'
-let g:github_colors_soft = 1
-let g:lightline = { 'colorscheme': 'github' }
+" Plug 'cormacrelf/vim-colors-github'
+" let g:github_colors_soft = 1
+" let g:lightline = { 'colorscheme': 'github' }
 "
 " gruvbox colorscheme
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 " Plug 'NLKNguyen/papercolor-theme'
 
 " Airline information line
@@ -144,8 +148,8 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = "dark"
-let g:airline_theme = "gruvbox"
-" let g:airline_theme = "papercolor"
+" let g:airline_theme = "gruvbox"
+let g:airline_theme = "atomic"
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#format = 2
@@ -668,8 +672,9 @@ elseif g:system == 'BENDER2'
 elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
 endif
 
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
@@ -833,5 +838,6 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 
 set background=dark
-colorscheme github
+" colorscheme github
 " colorscheme gruvbox
+colorscheme desert
