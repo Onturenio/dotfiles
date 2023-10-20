@@ -682,6 +682,9 @@ function! s:PythonBuffers()
     if getbufvar(bufnr.bufnr, '&filetype') ==# 'python'
       call add(python_bufs, bufnr.bufnr)
     endif
+    if getbufvar(bufnr.bufnr, '&filetype') ==# 'r'
+      call add(python_bufs, bufnr.bufnr)
+    endif
   endfor
   return python_bufs
 endfunction
@@ -738,12 +741,27 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HANDLE LATEX
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
- augroup LatexFile
-   autocmd Filetype tex let b:commentchar = '%'
-   autocmd Filetype tex set spell
-   autocmd Filetype tex nnoremap <C-C><C-C> :w<CR>:Latexmk<CR>
-   autocmd Filetype tex nnoremap <C-X><C-X> :LatexView<CR>
- augroup END
+augroup LatexFile
+  autocmd Filetype tex let b:commentchar = '%'
+  autocmd Filetype tex set spell
+  autocmd Filetype tex nnoremap <C-C><C-C> :w<CR>:Latexmk<CR>
+  autocmd Filetype tex nnoremap <C-X><C-X> :LatexView<CR>
+augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" HANDLE R
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup RFile
+  autocmd!
+   autocmd FileType r let g:ipython_exe="/usr/local/apps/R/4.0.4/bin/R"
+   autocmd FileType r let g:slime_python_ipython = 1
+   autocmd FileType r let g:slime_target = "vimterminal"
+   autocmd FileType r let g:slime_no_mappings = 1
+   autocmd FileType r let g:slime_vimterminal_cmd = g:ipython_exe
+   autocmd FileType r let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+   autocmd FileType r let g:slime_dont_ask_default = 1
+augroup END
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
