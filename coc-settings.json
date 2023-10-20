@@ -1,6 +1,6 @@
 {
 "pylsp.plugins.pycodestyle.enabled": false,
-"pylsp.plugins.flake8.enabled": true,
+"pylsp.plugins.flake8.enabled": false,
 "pylsp.plugins.flake8.ignore": ["E265", "E266"],
 "pylsp.plugins.pydocstyle.enabled": false,
 "pylsp.plugins.mccabe.enabled": false,
@@ -23,4 +23,6 @@
 "pylsp.builtin.enableInstallPylsIsort": true,
 "diagnostic.messageTarget": "float",
 "diagnostic.checkCurrentLine": true,
+"suggest.enablePreselect": false,
+"suggest.noselect": true
 }

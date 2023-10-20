@@ -486,6 +486,7 @@ set termguicolors
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set cursorline
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
