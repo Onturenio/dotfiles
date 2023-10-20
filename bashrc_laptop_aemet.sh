@@ -15,25 +15,21 @@ stty -ixon  # this avoids freezing when pressing C-s in the terminal https://uni
 
 function ectoken {
     if [[ $1 == "sp4e" ]] ; then
-        sha1=$(awk '/sp4e/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        sha1=$(awk '/sp4e/ {print $2}' ~/dotfiles/token_ecmwf)
         echo "sp4e"
     elif [[ $1 == "sp0w" ]] ; then
-        sha1=$(awk '/sp0w/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        sha1=$(awk '/sp0w/ {print $2}' ~/dotfiles/token_ecmwf)
         echo "sp0w"
     else
         echo "ERROR: user not found"
         return 1
     fi
-    # echo $sha1
+    echo $sha1
     # return 0
     passwd=$(oathtool -b --digits=6 --totp=sha1 "$sha1")
     echo TOTP: $passwd
 }
 
-function eclogin {
-        ectoken
-        teleport-login
-}
 
 function passwd_INTERNET {
 if [[ $# == 0 ]]; then

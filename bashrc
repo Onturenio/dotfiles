@@ -27,6 +27,8 @@ alias sur="ssh -X pn14@sur.aemet.es"
 alias cirrus="ssh pn14@cirrus.aemet.es"
 alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
 alias despacho="ssh navarro@172.24.141.44"
+alias server_gsreps_admin="ssh admin@172.24.8.92"
+alias server_gsreps_gsreps="ssh gsreps@172.24.8.92"
 
 ##########################################################################
 # ECMWF

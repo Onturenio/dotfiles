@@ -1,25 +1,26 @@
 {
 "pylsp.plugins.pycodestyle.enabled": false,
-"pylsp.plugins.flake8.enabled": false,
+"pylsp.plugins.flake8.enabled": true,
 "pylsp.plugins.flake8.ignore": ["E265", "E266"],
 "pylsp.plugins.pydocstyle.enabled": false,
 "pylsp.plugins.mccabe.enabled": false,
 "pylsp.plugins.pyflakes.enabled": false,
 "pylsp.plugins.yapf.enabled": false,
 "pylsp.plugins.ruff.enabled": true,
-"pylsp.plugins.ruff.extendSelect": ["D", "C90"],
-"pylsp.plugins.ruff.lineLength": 80,
-  "pylsp.builtin.installExtrasArgs": [
-    "flake8",
-    "yapf",
-    "mccabe",
-    "pycodestyle",
-    "pydocstyle",
-    "pyflakes",
-    "pylint",
-    "rope"
-  ],
+"pylsp.plugins.ruff.extendSelect": ["E", "D", "C90"],
+"pylsp.plugins.ruff.lineLength": 79,
+"pylsp.builtin.installExtrasArgs": [
+"flake8",
+"yapf",
+"mccabe",
+"pycodestyle",
+"pydocstyle",
+"pyflakes",
+"pylint",
+"rope"
+],
 "pylsp.builtin.enableInstallPythonLspRuff": true,
 "pylsp.builtin.enableInstallPylsIsort": true,
 "diagnostic.messageTarget": "float",
-"diagnostic.checkCurrentLine": true}
+"diagnostic.checkCurrentLine": true,
+}
