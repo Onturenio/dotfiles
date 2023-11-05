@@ -22,6 +22,13 @@ call plug#begin('~/.vim/bundle')
 " useful suround shotcuts
 Plug 'tpope/vim-surround'
 
+" show marks before using them
+Plug 'junegunn/vim-peekaboo'
+
+" marking paranthesis with colours
+Plug 'frazrepo/vim-rainbow'
+let g:rainbow_active = 1
+
 " set of standard default options
 Plug 'tpope/vim-sensible'
 
@@ -76,8 +83,8 @@ let g:LatexBox_Folding = 1
 let g:LatexBox_fold_envs = 0
 
 " Markdown integration
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 let maplocalleader = ','
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#folding#fdc = 0
@@ -155,6 +162,8 @@ let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_detect_modified=0
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 
 " additional line with open buffers
 " Plug 'bling/vim-bufferline'
@@ -676,6 +685,7 @@ else
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/autobriefing/bin/ipython"
 endif
 
 nnoremap <silent> <leader>p :call <SID>ToggleIPython()<CR>
