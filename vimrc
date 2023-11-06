@@ -183,7 +183,7 @@ call plug#end()
 let mapleader = ","
 
 " Mouse setup
-set mouse=a
+" set mouse=a
 set mousemodel=popup
 noremap <ScrollWheelUp> <C-Y>
 noremap <ScrollWheelDown> <C-E>
@@ -465,7 +465,7 @@ filetype indent on
 set nocompatible
 syntax on
 set number
-" set relativenumber
+set relativenumber
 set showcmd
 set showmode
 set autoindent
