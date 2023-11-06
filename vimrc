@@ -205,6 +205,7 @@ inoremap <C-ScrollWheelDown> <C-O>3<C-E>
 
 tnoremap <ScrollWheelUp> <C-\><C-n>
 
+
 "intuitive cursor movement in insert and visual modes
 set whichwrap=h,l,<,>,[,],s
 inoremap <UP> <C-O>gk
@@ -228,6 +229,10 @@ vnoremap <C-UP> <ESC>
 " jump between changes centering scroll"
 nnoremap [c [czz
 nnoremap ]c ]czz
+
+" scroll up and down
+nnoremap <C-F> <C-D>zz
+nnoremap <C-B> <C-U>zz
 
 " fast normal-insert modes
 " inoremap <C-UP> <ESC>
