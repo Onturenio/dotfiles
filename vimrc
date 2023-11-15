@@ -192,7 +192,17 @@ call plug#end()
 let mapleader = ","
 
 " Mouse setup
-" set mouse=a
+function ToggleMouse()
+  if &mouse == 'a'
+    set mouse=
+    echo "Mouse disabled"
+  else
+    set mouse=a
+    echo "Mouse enabled"
+  endif
+endfunction
+nnoremap <silent> <leader>m :call ToggleMouse()<CR>
+
 set mousemodel=popup
 noremap <ScrollWheelUp> <C-Y>
 noremap <ScrollWheelDown> <C-E>
