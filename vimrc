@@ -11,6 +11,8 @@ else
   let g:system = 'OTRO'
 endif
 
+let mapleader = ","
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "PLUGINS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -85,7 +87,7 @@ let g:LatexBox_fold_envs = 0
 " Markdown integration
 " Plug 'vim-pandoc/vim-pandoc'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
-let maplocalleader = ','
+" let maplocalleader = ','
 let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#folding#fdc = 0
 " let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
@@ -114,27 +116,28 @@ Plug 'yaegassy/coc-ruff', {'do': 'yarn install --frozen-lockfile'}
 Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
 
 
-
 " Send lines to a terminal (interactive programing, i.e. REPL)
 Plug 'jpalardy/vim-slime'
+let g:slime_no_mappings = 1
 Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
-let g:slime_no_mappings = 1
+
+" Slime-related mapings
+" xmap <leader>s <Plug>SlimeRegionSend
+" nmap <leader>s <Plug>SlimeParagraphSend
 " nmap <C-C>v <Plug>SlimeConfig
-nmap <silent> <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
-nmap <silent> <C-X><C-X> :SlimeSendCurrentLine<CR>j
-nmap <silent> <C-C><C-DOWN> <Plug>SlimeCellsNext
-nmap <silent> <C-C><C-UP> <Plug>SlimeCellsPrev
-xmap <silent> <C-C> <Plug>SlimeRegionSend
+" nmap <silent> <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
+" nmap <silent> <C-X><C-X> :SlimeSendCurrentLine<CR>j
+" nmap <silent> <C-C><C-DOWN> <Plug>SlimeCellsNext
+" nmap <silent> <C-C><C-UP> <Plug>SlimeCellsPrev
+" xmap <silent> <C-C> <Plug>SlimeRegionSend
 
 nmap <silent> [i <Plug>SlimeCellsPrev
 nmap <silent> ]i <Plug>SlimeCellsNext
+nmap <leader>s mzvic<ESC>:'<,'>SlimeSend<CR>`z
+xmap <leader>s <ESC>:'<,'>SlimeSend<CR>gv
 
-"" Autocompletation with YCM
-"if g:system != 'PANGEA'
-"  Plug 'Valloric/YouCompleteMe'
-"endif
 "let g:ycm_confirm_extra_conf = 0
 "let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_complete_in_comments = 1
@@ -484,6 +487,7 @@ vnoremap <silent>  <leader><C-A> :call Increase()<CR>
 "GENERAL OPTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+set wildoptions=pum
 filetype plugin on
 filetype indent on
 set nocompatible
@@ -698,8 +702,8 @@ elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/autobriefing/bin/ipython"
 endif
 
@@ -884,4 +888,4 @@ inoremap <silent><expr> <TAB>
 set background=dark
 " colorscheme github
 " colorscheme gruvbox
-colorscheme desert
+colorscheme evening
