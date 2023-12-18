@@ -497,6 +497,7 @@ call plug#end()
 "GENERAL OPTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+set wildoptions=pum
 filetype plugin on
 filetype indent on
 set wildoptions=pum
@@ -713,8 +714,8 @@ elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/chatbot/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/autobriefing/bin/ipython"
 endif
 
@@ -899,4 +900,4 @@ inoremap <silent><expr> <TAB>
 set background=dark
 " colorscheme github
 " colorscheme gruvbox
-colorscheme desert
+colorscheme evening
