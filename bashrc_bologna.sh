@@ -99,3 +99,10 @@ activate_anaconda(){
   module load conda
   conda activate vim
 }
+
+# include NODE in the path
+export PATH="~/SOFTWARE/NODE/bin:$PATH"
+export PATH="~/SOFTWARE/bin:$PATH"
+
+# Ecflow commands
+source ~/dotfiles/commands_ecflow.sh
