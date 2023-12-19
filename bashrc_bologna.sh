@@ -105,4 +105,4 @@ export PATH="~/SOFTWARE/NODE/bin:$PATH"
 export PATH="~/SOFTWARE/bin:$PATH"
 
 # Ecflow commands
-source ~/dotfiles/commands_ecflow.sh
+source ~/dotfiles/commands_monitor.sh

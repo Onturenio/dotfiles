@@ -5,19 +5,6 @@ import argparse
 
 import ecflow
 
-class Indentor:
-    """This class manages indentation, for use with context manager It is used
-    to correctly indent the definition node tree hierarchy """
-    _index = 0
-    def __init__(self):
-        Indentor._index += 1
-    def __del__(self):
-        Indentor._index -= 1
-    @classmethod
-    def indent(cls, the_file):
-        for i in range(Indentor._index):
-            the_file.write(' ')
-
 class DefsTraverser:
     """Traverse the ecflow.Defs definition and write to file.
 
@@ -44,16 +31,13 @@ class DefsTraverser:
     def _print_nc(self, node_container):
         for node in node_container.nodes:
             if isinstance(node, ecflow.Task):
-                # print("task ")
                 self._print_node(node)
             else:
-                # print("family ")
                 self._print_node(node)
                 self._print_nc(node)
-                # print("endfamily")
 
     def _output(self, text, colour):
-        """ function that prints out the node name using ANSI colour codes"""
+        """Print out the node name using ANSI colour codes."""
         colour2ansicode = {
           'red': '\033[;31m',
           'green': '\033[;32m',
@@ -62,9 +46,10 @@ class DefsTraverser:
           'purple': '\033[;35m',
           'cyan': '\033[;36m',
           'white': '\033[;37m',
+          'orange': '\033[;91m',
           'end': '\033[0m',
         }
-        print (colour2ansicode[colour] + text + colour2ansicode['end'])
+        print(colour2ansicode[colour] + text + colour2ansicode['end'])
 
     def _print_node(self, node):
         palette = {
@@ -93,7 +78,7 @@ class DefsTraverser:
         text += f" #def_{node.get_defstatus()}"
         colour = palette[node.get_state()]
         if node.is_suspended():
-            text += " #suspended"
+            text += "\033[1;91m #suspended\033[0m"
         self._output(text, colour)
 
         # defStatus = node.get_defstatus()

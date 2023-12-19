@@ -1,3 +1,19 @@
+#### configuration ecflow commands ####
+export ecflow_host="ecflow-gen-sp0w-001"
+export ecflow_port="3141"
+export python_script="/home/sp4e/dotfiles/query_server_fzf.py"
+
+alias ec_view='ec_command --command "view" --suite'
+alias ec_suspend='ec_command --command --suspend --header "Select nodes to suspend" --suite'
+alias ec_resume='ec_command --command --resume --header "Select nodes to resume" --suite'
+alias ec_kill='ec_command --command --kill --header "Select nodes to kill" --suite'
+alias ec_complete='ec_command --command "--force=complete recursive" --header "Select nodes to set to complete" --suite'
+alias ec_requeue='ec_command --command "--requeue force" --header "Select nodes to requeue" --suite'
+alias ec_defcomplete='ec_command --command "--alter change defstatus complete" --header "Select nodes to set Default Status complete" --suite'
+alias ec_defqueued='ec_command --command "--alter change defstatus queued" --header "Select nodes to set Default Status queued" --suite'
+#### end configuration ecflow commands ####
+
+
 # list queues for given user, sp0w by default
 function sq {
   if [[ $# == 0 ]]
@@ -8,15 +24,14 @@ function sq {
   fi
 
   # invoque FZF to fyzzy-filter jobs
-  header='HOST    JOBID PARTITION         NAME     USER      STATE       TIME  NODES NODELIST(REASON)'
+  header='HOST    JOBID  PART               NAME     USER      STATE       TIME #NODES NODELIST(REASON)'
   processes=$(_getjobs $user | \
     fzf --ansi --header="$header" --no-sort --exact +i --preview "_getjobinfo {1} {2}" --bind "ctrl-r:reload(_getjobs $user)" | \
     awk '{print $1, $2}')
 
   # get PIDs reading from first column in processes
   pids=""
-  while
-    read line; do
+  while read line; do
     system=$(echo $line | awk '{print $1}')
     pid=$(echo $line | awk '{print $2}')
     pids="$pids $pid"
@@ -49,8 +64,17 @@ function sq {
 # auxiliary function to get list of jobs in both ECS and HPC
 _getjobs(){
   format="%.10i %.5P %.18j %.8u %.10T %.10M %.6D %R"
-  ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}'
-  ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}'
+  # ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}' | sed "s#\x1B\(\[;49;[0-9][0-9]m\)\(.*\)RUNNING\(.*\)#\x1B\1\2\x1B[;49;32mRUNNING\x1B\1\3#"
+  # ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}' | sed "s#\x1B\(\[;49;[0-9][0-9]m\)\(.*\)RUNNING\(.*\)#\x1B\1\2\x1B[;49;32mRUNNING\x1B\1\3#"
+  ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[1;49;34mECS\033[0m" $0}' \
+      | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
+      | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
+      | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#"
+
+  ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[1;49;91mHPC\033[0m" $0}' \
+      | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
+      | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
+      | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#"
 }
 
 # auxiliary function to get exhaustive info from a given job
@@ -72,7 +96,7 @@ _getjobinfo(){
 export -f _getjobinfo
 export -f _getjobs
 
-
+# general template function to build Ecflow commands
 function ec_command() {
   suite=""
   command=""
@@ -142,7 +166,7 @@ function ec_command() {
   # return 0
   #
 
-  python_query="dotfiles/query_server_fzf.py $suite --host $host  --port $port"
+  python_query="$python_script $suite --host $host  --port $port"
 
   processes=$($python_query | fzf --reverse --ansi --exact +i --header="$header" --bind "ctrl-r:reload($python_query)"  | \
     awk '{print $1}')
@@ -162,14 +186,3 @@ function ec_command() {
   done < <(echo "$processes")
 }
 
-# configuration ecflow commands
-export ecflow_host="ecflow-gen-sp0w-001"
-export ecflow_port="3141"
-
-alias ec_view='ec_command --command "view" --suite'
-alias ec_suspend='ec_command --command --suspend --header "Select nodes to suspend" --suite'
-alias ec_resume='ec_command --command --resume --header "Select nodes to resume" --suite'
-alias ec_complete='ec_command --command "--force=complete recursive" --header "Select nodes to set to complete" --suite'
-alias ec_requeue='ec_command --command "--requeue force" --header "Select nodes to requeue" --suite'
-alias ec_defcomplete='ec_command --command "--alter change defstatus complete" --header "Select nodes to set Default Status complete" --suite'
-alias ec_defqueued='ec_command --command "--alter change defstatus queued" --header "Select nodes to set Default Status queued" --suite'
