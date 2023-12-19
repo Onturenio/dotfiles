@@ -14,6 +14,7 @@ endif
 if g:system =~ 'ECMWF'
   let g:coc_node_path = '/home/sp4e/SOFTWARE/bin/node'
   let g:copilot_node_command = '/home/sp4e/SOFTWARE/bin/node'
+endif
 
 let mapleader = ","
 
