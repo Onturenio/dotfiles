@@ -500,8 +500,15 @@ Plug 'vim-scripts/indentpython.vim'
 
 " Latex integration
 Plug 'LaTeX-Box-Team/LaTeX-Box'
-let g:LatexBox_Folding = 1
-let g:LatexBox_fold_envs = 0
+
+augroup filetype_latex
+  autocmd!
+  let g:LatexBox_Folding = 1
+  let g:LatexBox_fold_envs = 0
+  nnoremap <buffer> <F5> :Latexmk<CR>
+  nnoremap <buffer> <F6> :LatexView<CR>
+augroup END
+  
 
 " Markdown integration
 " Plug 'vim-pandoc/vim-pandoc'
@@ -880,8 +887,8 @@ elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/autobriefing/bin/ipython"
 endif
 
@@ -1063,7 +1070,7 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
 
-set background=dark
-colorscheme github
+" set background=light
+" colorscheme github
 " colorscheme gruvbox
-" colorscheme desert
+colorscheme desert
