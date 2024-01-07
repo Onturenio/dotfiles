@@ -18,179 +18,6 @@ endif
 
 let mapleader = ","
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"PLUGINS
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-
-" let vim-plugin to handle plugins
-call plug#begin('~/.vim/bundle')
-
-" useful suround shotcuts
-Plug 'tpope/vim-surround'
-
-" show marks before using them
-Plug 'junegunn/vim-peekaboo'
-
-" marking paranthesis with colours
-Plug 'frazrepo/vim-rainbow'
-let g:rainbow_active = 1
-
-" set of standard default options
-Plug 'tpope/vim-sensible'
-
-" useful shortcuts
-Plug 'tpope/vim-unimpaired'
-
-" Grep like a pro
-Plug 'mhinz/vim-grepper'
-let g:grepper = {}
-let g:grepper.tools = [ 'ag', 'rg', 'git']
-
-" fzf integration
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-" Customize fzf colors to match your color scheme
-" - fzf#wrap translates this to a set of `--color` options
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-\ 'bg':      ['bg', 'Normal'],
-\ 'hl':      ['fg', 'Comment'],
-\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-\ 'hl+':     ['fg', 'Statement'],
-\ 'info':    ['fg', 'PreProc'],
-\ 'border':  ['fg', 'Ignore'],
-\ 'prompt':  ['fg', 'Conditional'],
-\ 'pointer': ['fg', 'Exception'],
-\ 'marker':  ['fg', 'Keyword'],
-\ 'spinner': ['fg', 'Label'],
-\ 'header':  ['fg', 'Comment'] }
-
-" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-" let g:fzf_layout = { 'down': '40%' }
-" disable status ber when opening fzf
-autocmd! FileType fzf
-autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
-" Git integration
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-
-" Python formatting, indenting and folding
-Plug 'Konfekt/FastFold'
-Plug 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview = 1
-Plug 'vim-scripts/indentpython.vim'
-
-" Latex integration
-Plug 'LaTeX-Box-Team/LaTeX-Box'
-let g:LatexBox_Folding = 1
-let g:LatexBox_fold_envs = 0
-
-" Markdown integration
-" Plug 'vim-pandoc/vim-pandoc'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
-" let maplocalleader = ','
-let g:pandoc#syntax#conceal#use = 0
-let g:pandoc#folding#fdc = 0
-" let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-" let g:pandoc#filetypes#pandoc_markdown = 0
-let g:pandoc#toc#close_after_navigating = 0
-if !exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.pandoc = ['@']
-let g:ycm_filetype_blacklist = {}
-let g:pandoc#syntax#codeblocks#embeds#langs = ["r", "python"]
-
-" Toggle comments
-Plug 'tpope/vim-commentary'
-nmap <C-d> gcc
-xmap <C-d> gc
-
-
-" Static code analysis of code with ALE
-" Plug 'dense-analysis/ale'
-" let g:ale_linters_explicit = 1
-
-" Static code analysis with CoC
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'yaegassy/coc-ruff', {'do': 'yarn install --frozen-lockfile'}
-Plug 'yaegassy/coc-pylsp', {'do': 'yarn install --frozen-lockfile'}
-
-
-" Send lines to a terminal (interactive programing, i.e. REPL)
-Plug 'jpalardy/vim-slime'
-let g:slime_no_mappings = 1
-Plug 'Klafyvel/vim-slime-cells'
-let g:slime_cells_highlight_from = "CursorLineNr"
-let g:slime_cell_delimiter = "#%%"
-
-" Slime-related mapings
-" xmap <leader>s <Plug>SlimeRegionSend
-" nmap <leader>s <Plug>SlimeParagraphSend
-" nmap <C-C>v <Plug>SlimeConfig
-" nmap <silent> <C-C><C-C> <Plug>SlimeCellsSendAndGoToNext
-" nmap <silent> <C-X><C-X> :SlimeSendCurrentLine<CR>j
-" nmap <silent> <C-C><C-DOWN> <Plug>SlimeCellsNext
-" nmap <silent> <C-C><C-UP> <Plug>SlimeCellsPrev
-" xmap <silent> <C-C> <Plug>SlimeRegionSend
-
-nmap <silent> [i <Plug>SlimeCellsPrev
-nmap <silent> ]i <Plug>SlimeCellsNext
-nmap <leader>s mzvic<ESC>:'<,'>SlimeSend<CR>`z
-xmap <leader>s <ESC>:'<,'>SlimeSend<CR>gv
-
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_auto_hover = ''
-
-" github colors
-" Plug 'cormacrelf/vim-colors-github'
-" let g:github_colors_soft = 1
-" let g:lightline = { 'colorscheme': 'github' }
-"
-" gruvbox colorscheme
-Plug 'morhetz/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
-
-" Airline information line
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-" let g:airline_theme = "dark"
-" let g:airline_theme = "gruvbox"
-let g:airline_theme = "atomic"
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline#extensions#branch#format = 2
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline_detect_modified=0
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-
-" additional line with open buffers
-Plug 'bling/vim-bufferline'
-" let g:bufferline_echo = 0
-" autocmd VimEnter *
-"   \ let &statusline='%{bufferline#refresh_status()}'
-"     \ .bufferline#get_status_string()
-
-Plug 'github/copilot.vim'
-
-let g:copilot_filetypes = {
-    \ 'gitcommit': v:true,
-    \ 'markdown': v:true,
-    \ 'yaml': v:true
-    \ }
-
-call plug#end()
-"'}}}
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS AND OTHER GENERAL STUFF TO FACILITATE EDITION
@@ -228,12 +55,12 @@ tnoremap <ScrollWheelUp> <C-\><C-n>
 
 "intuitive cursor movement in insert and visual modes
 set whichwrap=h,l,<,>,[,],s
-inoremap <UP> <C-O>gk
-inoremap <DOWN> <C-O>gj
-vnoremap <LEFT> h
-vnoremap <RIGHT> l
-vnoremap <UP> k
-vnoremap <DOWN> j
+" inoremap <UP> <C-O>gk
+" inoremap <DOWN> <C-O>gj
+" vnoremap <LEFT> h
+" vnoremap <RIGHT> l
+" vnoremap <UP> k
+" vnoremap <DOWN> j
 
 " fast enter to visual mode with shift key
 inoremap <S-RIGHT> <ESC>lve
@@ -244,7 +71,7 @@ nnoremap <S-LEFT> <ESC>vb
 " exit to normal mode
 inoremap ZZ <ESC>ZZ
 inoremap jk <C-[>
-vnoremap <C-UP> <ESC>
+" vnoremap <C-UP> <ESC>
 
 " jump between changes centering scroll"
 nnoremap [c [czz
@@ -254,27 +81,13 @@ nnoremap ]c ]czz
 nnoremap <C-F> <C-D>zz
 nnoremap <C-B> <C-U>zz
 
-" fast normal-insert modes
-" inoremap <C-UP> <ESC>
-"nnoremap <C-DOWN> i
-
 " train myself to use hjkl in normal mode
-nnoremap <Left>  :echo "Don't use the cursors!"<CR>
-nnoremap <Right> :echo "Don't use the cursors!"<CR>
-nnoremap <Up>    :echo "Don't use the cursors!"<CR>
-nnoremap <Down>  :echo "Don't use the cursors!"<CR>
+" nnoremap <Left>  :echo "Don't use the cursors!"<CR>
+" nnoremap <Right> :echo "Don't use the cursors!"<CR>
+" nnoremap <Up>    :echo "Don't use the cursors!"<CR>
+" nnoremap <Down>  :echo "Don't use the cursors!"<CR>
 " inoremap <esc> <nop>
 " inoremap <silent> <expr> <ESC> <nop>
-
-" function! Exit()
-"   " let u = rand()
-"   " if u < 0.5
-"     return "\<ESC>"
-"   " else
-"     " echo "NO"
-"     " return ""
-"   " endif
-" endfunction
 
 " Remember folding
 "au BufWinLeave * mkview
@@ -505,10 +318,13 @@ augroup filetype_latex
   autocmd!
   let g:LatexBox_Folding = 1
   let g:LatexBox_fold_envs = 0
-  nnoremap <buffer> <F5> :Latexmk<CR>
+  nnoremap <buffer> <F5> :w<cR>:Latexmk<CR>
   nnoremap <buffer> <F6> :LatexView<CR>
+  inoremap <buffer> <F5> <ESC>:w<cR>:Latexmk<CR>
+  inoremap <buffer> <F6> <ESC>:LatexView<CR>
+  nnoremap <buffer> <leader>a viw<ESC>`<i\alert{<ESC>ea}<ESC>
+  vnoremap <buffer> <leader>a <ESC>`>a}<ESC>`<i\alert{<ESC>
 augroup END
-  
 
 " Markdown integration
 " Plug 'vim-pandoc/vim-pandoc'
@@ -596,6 +412,11 @@ let g:copilot_filetypes = {
     \ 'markdown': v:true,
     \ 'yaml': v:true
     \ }
+
+" vim hardtime
+Plug 'takac/vim-hardtime'
+let g:hardtime_default_on = 1
+let g:hardtime_showmsg = 1
 
 call plug#end()
 "'}}}
@@ -887,8 +708,8 @@ elseif g:system == 'AEMET'
   let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/AEMET/bin/ipython"
 else
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/test/bin/ipython"
-  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
-  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
+  " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/meteoradar/bin/ipython"
+  let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/assistant/bin/ipython"
   " let g:ipython_exe="/home/navarro/SOFTWARE/anaconda3/envs/autobriefing/bin/ipython"
 endif
 
