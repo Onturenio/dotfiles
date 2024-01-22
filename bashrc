@@ -52,6 +52,9 @@ alias ecflow_forward_atos_sp0w="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@e
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# tmux completion
+[ -f ~/dotfiles/tmux_completion.bash ] && source ~/dotfiles/tmux_completion.bash
+
 # git completion
 [ -f ~/dotfiles/git-completion.bash ] && source ~/dotfiles/git-completion.bash
 
