@@ -672,10 +672,12 @@ augroup filetype_python
     autocmd FileType python let g:slime_dont_ask_default = 1
   else
     autocmd FileType python let g:slime_python_ipython = 1
-    autocmd FileType python let g:slime_target = "vimterminal"
+    autocmd FileType python let g:slime_target = "tmux"
+    " autocmd FileType python let g:slime_target = "vimterminal"
     autocmd FileType python let g:slime_no_mappings = 1
-    autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    " autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
     autocmd FileType python let g:slime_dont_ask_default = 1
   endif
 
@@ -892,6 +894,6 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 
 " set background=light
-" colorscheme github
+colorscheme github
 " colorscheme gruvbox
-colorscheme desert
+" colorscheme desert

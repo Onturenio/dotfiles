@@ -75,3 +75,18 @@ conda activate AEMET2
 
 # create OPENAI_API_KEY
 source ~/dotfiles/openai.sh
+
+function REPL {
+    options=("assistant" "meteoradar")
+    choice=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select environment: ")
+
+    if [[ $choice == "assistant" ]]; then
+        cd ~/METEORED/CHATBOT
+        conda activate assistant
+        ipython
+    elif [[ $choice == "meteoradar" ]]; then
+        cd ~/METEORED/METEORADAR
+        conda activate meteoradar
+        ipython
+    fi
+}
