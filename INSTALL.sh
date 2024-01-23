@@ -1,7 +1,7 @@
 set -ex
 
 cd $HOME
-for file in bash_profile bashrc gitconfig vimrc; do
+for file in bash_profile bashrc gitconfig vimrc tmux.conf; do
   rm -rf .$file
   ln -sf ~/dotfiles/$file .$file
 done
