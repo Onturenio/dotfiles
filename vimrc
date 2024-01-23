@@ -128,11 +128,11 @@ nnoremap <leader>- <C-W>-
 nnoremap <leader>0 <C-W>=
 " nnoremap <TAB> <C-W>w
 
-" window navigation normal mode
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" " window navigation normal mode -> overrided by vim-tmux-navigator
+" nnoremap <C-J> <C-W><C-J>
+" nnoremap <C-K> <C-W><C-K>
+" nnoremap <C-L> <C-W><C-L>
+" nnoremap <C-H> <C-W><C-H>
 
 " window navigation terminal mode
 tnoremap <C-J> <C-W>j
@@ -417,6 +417,14 @@ let g:copilot_filetypes = {
 Plug 'takac/vim-hardtime'
 let g:hardtime_default_on = 1
 let g:hardtime_showmsg = 1
+
+" tmux integration
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'RyanMillerC/better-vim-tmux-resizer'
+nnoremap j :TmuxResizeDown<CR>
+nnoremap k :TmuxResizeUp<CR>
+nnoremap h :TmuxResizeLeft<CR>
+nnoremap l :TmuxResizeRight<CR>
 
 call plug#end()
 "'}}}
