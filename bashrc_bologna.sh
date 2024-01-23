@@ -5,6 +5,7 @@ alias hpc='ssh -Y hpc-login'
 alias ecs='ssh -Y ecs-login'
 alias sp0w='ssh -Y sp0w@ecs-login'
 alias micola='sq sp4e'
+alias pn='getent passwd'
 
 export EDITOR=/usr/bin/vim
 
