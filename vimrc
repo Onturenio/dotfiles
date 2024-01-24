@@ -901,7 +901,7 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
 
-set background=dark
+set background=light
 colorscheme github
 " colorscheme gruvbox
 " colorscheme desert
