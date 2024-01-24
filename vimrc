@@ -156,10 +156,10 @@ nnoremap <leader>E :lclose<CR>
 " nmap <silent> <leader>en <Plug>(ale_next_wrap)
 
 " text object mappings
-onoremap { i{
-onoremap k i{
-onoremap n{ :normal! f{lvi{<cr>
-onoremap nk :normal! f{lvi{<cr>
+" onoremap { i{
+" onoremap k i{
+" onoremap n{ :normal! f{lvi{<cr>
+" onoremap nk :normal! f{lvi{<cr>
 
 onoremap ( i(
 onoremap p i(
