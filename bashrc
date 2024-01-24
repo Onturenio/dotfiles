@@ -58,6 +58,14 @@ alias ecflow_forward_atos_sp0w="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@e
 # git completion
 [ -f ~/dotfiles/git-completion.bash ] && source ~/dotfiles/git-completion.bash
 
+# conda env switcher with fzf
+conda_env() {
+    local env=$(conda env list | grep -v '#' | awk '{print $1}' | grep . | fzf --prompt="Select conda env: ")
+    if [ -n "$env" ]; then
+        conda activate $env
+    fi
+}
+
 # laptop specific setup
 if [ $(hostname) == 'bender' ]; then
     [ -f ~/dotfiles/bashrc_laptop.sh ] && source ~/dotfiles/bashrc_laptop.sh
