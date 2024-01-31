@@ -13,35 +13,6 @@ export INFOPATH="$INFOPATH:/home/navarro/SOFTWARE/texlive/2020/texmf-dist/doc/in
 
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
 
-function ectoken {
-    if [[ $1 == "sp4e" ]] ; then
-        sha1=$(awk '/sp4e/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
-        echo "sp4e"
-    elif [[ $1 == "sp0w" ]] ; then
-        sha1=$(awk '/sp0w/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
-        echo "sp0w"
-    else
-        echo "ERROR: user not found"
-        return 1
-    fi
-    # echo $sha1
-    # return 0
-    passwd=$(oathtool -b --digits=6 --totp=sha1 "$sha1")
-    echo TOTP: $passwd
-}
-
-
-function passwd_INTERNET {
-if [[ $# == 0 ]]; then
-  gpg -d ~/Dropbox/INTERNET.asc 2> /dev/null | less
-  echo "Type \"gpg -ca file\" to encrypt a file in ASCII"
-elif [[ $# == 1 ]]; then
-  gpg -d ~/Dropbox/INTERNET.asc 2> /dev/null | grep -i $1
-else
-  echo "Usage passwd_INTERNET [filter]"
-fi
-}
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/navarro/SOFTWARE/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
