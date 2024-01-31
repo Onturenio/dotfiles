@@ -7,11 +7,16 @@ alias vi="vim"
 alias ls="ls --color"
 alias ll='ls -ltr'
 alias grep='grep --color'
+alias fd='fdfind'
 
 # fzf-related config
 export BAT_THEME="GitHub"
 export FZF_DEFAULT_COMMAND='rg --files'
-export FZF_DEFAULT_OPTS='--multi --border --height 40%'
+export FZF_DEFAULT_OPTS='--multi --border --height 80%'
+export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
+export FZF_CTRL_T_OPTS="
+  --preview 'batcat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 # Functions and commands defined elsewhere
 # source ~/dotfiles/shell-commands.sh
@@ -49,6 +54,37 @@ alias ecflow_forward_atos_sp4e="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@e
 alias ecflow_forward_atos_imp="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-imp-001 -N -L3142:localhost:3141"
 alias ecflow_forward_atos_sp0w="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@ecflow-gen-sp0w-001 -N -L3143:localhost:3141"
 
+# get token for ECMWF using oathtool
+function ectoken {
+    if [[ ! -f ~/dotfiles/token_ecmwf ]]; then
+        echo "ERROR: token_ecmwf not found"
+        return 1
+    fi
+    if [[ ! $(which oathtool) ]]; then
+        echo "ERROR: oathtool not found"
+        return 1
+    fi
+
+    if [[ $1 == "sp4e" ]] || [[ $1 == "" ]] ; then
+        sha1=$(awk '/sp4e/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        user="sp4e"
+    elif [[ $1 == "sp0w" ]] ; then
+        sha1=$(awk '/sp0w/ {print $2 $3, $4, $5, $6, $7, $7, $8, $9}' ~/dotfiles/token_ecmwf)
+        user="sp0w"
+    else
+        echo "ERROR: user not found"
+        return 1
+    fi
+    passwd=$(oathtool -b --digits=6 --totp=sha1 "$sha1")
+
+    if [[ $(which xclip) ]]; then
+        echo -n $passwd | xclip -selection clipboard
+        echo "TOTP for $user: $passwd (already copied to clipboard)"
+    else
+        echo "TOTP for $user: $passwd"
+    fi
+}
+
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -59,7 +95,7 @@ alias ecflow_forward_atos_sp0w="ssh -J sp4e@jump.ecmwf.int,sp4e@hpc-login sp4e@e
 [ -f ~/dotfiles/git-completion.bash ] && source ~/dotfiles/git-completion.bash
 
 # conda env switcher with fzf
-conda_env() {
+condaenv() {
     local env=$(conda env list | grep -v '#' | awk '{print $1}' | grep . | fzf --prompt="Select conda env: ")
     if [ -n "$env" ]; then
         conda activate $env
