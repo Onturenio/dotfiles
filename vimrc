@@ -318,29 +318,19 @@ augroup filetype_latex
   autocmd!
   let g:LatexBox_Folding = 1
   let g:LatexBox_fold_envs = 0
-  nnoremap <buffer> <F5> :w<cR>:Latexmk<CR>
-  nnoremap <buffer> <F6> :LatexView<CR>
-  inoremap <buffer> <F5> <ESC>:w<cR>:Latexmk<CR>
-  inoremap <buffer> <F6> <ESC>:LatexView<CR>
-  nnoremap <buffer> <leader>a viw<ESC>`<i\alert{<ESC>ea}<ESC>
-  vnoremap <buffer> <leader>a <ESC>`>a}<ESC>`<i\alert{<ESC>
+  autocmd Filetype latex,tex nnoremap <buffer> <F5> :w<cR>:Latexmk<CR>
+  autocmd Filetype latex,tex nnoremap <buffer> <F6> :LatexView<CR>
+  autocmd Filetype latex,tex inoremap <buffer> <F5> <ESC>:w<cR>:Latexmk<CR>
+  autocmd Filetype latex,tex inoremap <buffer> <F6> <ESC>:LatexView<CR>
+  autocmd Filetype latex,tex nnoremap <buffer> <leader>a viw<ESC>`<i\alert{<ESC>ea}<ESC>
+  autocmd Filetype latex,tex vnoremap <buffer> <leader>a <ESC>`>a}<ESC>`<i\alert{<ESC>
 augroup END
 
 " Markdown integration
-" Plug 'vim-pandoc/vim-pandoc'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+auto BufRead,BufNewFile *.md set filetype=markdown.pandoc
 let maplocalleader = ','
-let g:pandoc#syntax#conceal#use = 0
-let g:pandoc#folding#fdc = 0
-" let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-" let g:pandoc#filetypes#pandoc_markdown = 0
-let g:pandoc#toc#close_after_navigating = 0
-if !exists('g:ycm_semantic_triggers')
-  let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.pandoc = ['@']
-let g:ycm_filetype_blacklist = {}
-let g:pandoc#syntax#codeblocks#embeds#langs = ["r", "python"]
 
 " Toggle comments
 Plug 'tpope/vim-commentary'
@@ -500,6 +490,7 @@ call plug#end()
 "GENERAL OPTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
+set nowrapscan
 set wildoptions=pum
 filetype plugin on
 filetype indent on
@@ -700,6 +691,19 @@ augroup filetype_python
   endif
   autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
   autocmd FileType python let g:slime_cell_delimiter = "#%%"
+augroup END
+
+augroup pandoc
+  autocmd!
+  let g:pandoc#syntax#conceal#use = 0
+  " let g:pandoc#folding#fdc = 0
+  let g:pandoc#modules#disabled = ["folding"]
+  let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+  " let g:pandoc#filetypes#pandoc_markdown = 0
+  let g:pandoc#toc#close_after_navigating = 0
+  let g:pandoc#syntax#codeblocks#embeds#langs = ["r", "python"]
+  autocmd Filetype pandoc nmap <silent> <buffer> <F5> :w<CR>:Pandoc pdf<CR>
+  autocmd Filetype pandoc nmap <silent> <buffer> <F6> :! evince %:r.pdf &<CR><CR>
 augroup END
 "}}}
 
