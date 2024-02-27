@@ -14,9 +14,10 @@ class DefsTraverser:
     server, it allows access to latest snapshot of the state data held in the
     server.
     """
-    def __init__(self, suite):
+    def __init__(self, suite, color=False):
         assert isinstance(suite, ecflow.Suite), "Expected ecflow.Suite as first argument"
         self._suite = suite
+        self._color = color
 
     def print_to_stdout(self):
           # print("suite ")
@@ -49,7 +50,12 @@ class DefsTraverser:
           'orange': '\033[;91m',
           'end': '\033[0m',
         }
-        print(colour2ansicode[colour] + text + colour2ansicode['end'])
+        if self._color:
+            print(colour2ansicode[colour] + text + colour2ansicode['end'])
+            # print(text)
+        else:
+            print(text)
+
 
     def _print_node(self, node):
         palette = {
@@ -72,7 +78,7 @@ class DefsTraverser:
 
         abs_node_path = node.get_abs_node_path()
         nested_level = abs_node_path.count("/") - 1
-        indent = '  ' * nested_level
+        indent = '' * nested_level
 
         text = f"{indent}{abs_node_path} #{node_type} #{node.get_state()}"
         text += f" #def_{node.get_defstatus()}"
@@ -126,13 +132,17 @@ class DefsTraverser:
         # for zombie in node.zombies:   print(str(zombie))
 
         # del indent
+    def __repr__(self):
+        return f"DefsTraverser(self._suite, color={self._color})"
 
 parser = argparse.ArgumentParser(description='Util to query ecflow server')
 
-parser.add_argument('suite', help='Suite name')
+# parser.add_argument('suite', help='Suite name')
 parser.add_argument('--host', type=str, default='ecflow-gen-sp0w-001',
                     help='Server name')
-parser.add_argument('--port', type=int, default = 3141, help='Port number')
+parser.add_argument('--port', type=int, default=3141, help='Port number')
+
+parser.add_argument('--color', action='store_true', help='Enable color output')
 
 # Parsea los argumentos de la línea de comandos
 args = parser.parse_args()
@@ -151,23 +161,6 @@ if len(list(server_defs.suites)) == 0:
     print("The server has no suites")
     sys.exit(0)
 
-suites = [suite.name() for suite in server_defs.suites if args.suite in suite.name()]
-
-if len(suites) == 0:
-    print(f"The server {args.host} has no suite with name: " + args.suite)
-    print("Available suites are: ")
-    for suite in server_defs.suites:
-        print("  " + suite.name())
-    sys.exit(0)
-
-if len(suites) > 1:
-    print("The server has more than one suite with name: " + args.suite)
-    print("Available suites are: ")
-    for suite in server_defs.suites:
-        print("  " + suite.name())
-    sys.exit(0)
-
 for suite in server_defs.suites:
-    if args.suite in suite.name():
-        traverser = DefsTraverser(suite).print_to_stdout()
+    traverser = DefsTraverser(suite, color=args.color).print_to_stdout()
 
