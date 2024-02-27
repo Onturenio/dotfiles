@@ -10,7 +10,7 @@
 [color]
 	ui = true
 [alias]
-	history = log --oneline --graph --all
+	history = log --branches --remotes --tags --graph --oneline --decorate
 [push]
 	default = simple
 [credential]
