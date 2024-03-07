@@ -255,6 +255,9 @@ Plug '/home/sp4e/vim-ecflow'
 " useful suround shotcuts
 Plug 'tpope/vim-surround'
 
+" indent lines
+Plug 'Yggdroot/indentLine'
+
 " show marks before using them
 Plug 'junegunn/vim-peekaboo'
 
@@ -689,7 +692,6 @@ augroup filetype_python
     autocmd FileType python let g:ale_linters = {'python': ['ruff', 'pydocstyle']}
     autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
   endif
-  autocmd FileType python nnoremap<leader>gf  :YcmCompleter GoToDefinitionElseDeclaration<CR>
   autocmd FileType python let g:slime_cell_delimiter = "#%%"
 augroup END
 
@@ -803,6 +805,20 @@ augroup LatexFile
   autocmd Filetype tex nnoremap <C-X><C-X> :LatexView<CR>
 augroup END
 
+onoremap af :<C-u>call SelectEnvironment()<CR>
+
+function! SelectEnvironment()
+    let l:start_pos = searchpair('\\begin{', '', '\\end{', 'bnW')
+    if l:start_pos > 0
+        normal! v
+        call searchpair('\\begin{', '', '\\end{', 'sW')
+        normal! o
+    else
+        echoerr "No se encontró \\begin{}"
+    endif
+endfunction
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HANDLE R
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -871,6 +887,9 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
+
+" format text
+nnoremap <silent> <leader>ff  :call CocAction('format')<CR>
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
