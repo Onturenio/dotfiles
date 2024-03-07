@@ -3,6 +3,9 @@ export ecflow_host="ecflow-gen-sp0w-001"
 export ecflow_port="3141"
 export python_script="/home/sp4e/dotfiles/query_server_fzf.py"
 
+alias micola='sq sp4e'
+alias miec='ec --host ecflow-gen-sp4e-001 --port 3141'
+
 # alias ec_view='ec_command --command "view" --suite'
 # alias ec_suspend='ec_command --command --suspend --header "Select nodes to suspend" --suite'
 # alias ec_resume='ec_command --command --resume --header "Select nodes to resume" --suite'
@@ -239,7 +242,7 @@ function ec(){
         shift 2
         ;;
       -h|--help)
-        echo "Usage: ec_command [--host <host>] [--port <port>]"
+        echo "Usage: ec [--host <host>] [--port <port>]"
         return 0
         ;;
       *)
