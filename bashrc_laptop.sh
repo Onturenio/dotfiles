@@ -19,7 +19,7 @@ export PATH="$PATH:~/SOFTWARE/Zotero_linux-x86_64"
 export PATH="$PATH:~/SOFTWARE/shellcheck-master"
 export PATH="$PATH:~/SOFTWARE/eccodes/bin"
 # export PATH="$PATH:~/SOFTWARE/anaconda/bin"
-# export PATH="$PATH:$HOME/SOFTWARE/local/bin/"
+export PATH="$PATH:$HOME/SOFTWARE/local/bin/"
 # export PATH="$PATH:$HOME/SOFTWARE/"
 
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
@@ -56,7 +56,7 @@ eval "$(github-copilot-cli alias -- "$0")"
 conda activate AEMET2
 
 # create OPENAI_API_KEY
-source ~/dotfiles/openai.sh
+source ~/dotfiles/assistant.sh
 
 function REPL {
     options=("assistant" "meteoradar")
