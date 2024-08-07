@@ -245,10 +245,15 @@ vnoremap <silent>  <leader><C-A> :call Increase()<CR>
 " let vim-plugin to handle plugins
 call plug#begin('~/.vim/bundle')
 
-Plug '/home/sp4e/vim-squeue'
-let g:squeue_user = 'sp0w'
-nnoremap <leader>sq :Squeue!<CR>
-nnoremap <leader>mc :Squeue! sp4e<CR>
+" Plug '/home/sp4e/vim-squeue'
+" let g:squeue_user = 'sp0w'
+" nnoremap <leader>sq :Squeue!<CR>
+" nnoremap <leader>mc :Squeue! sp4e<CR>
+
+" AI chatbov
+Plug 'madox2/vim-ai'
+source ~/dotfiles/vim-ai-setup.vim
+
 
 Plug '/home/sp4e/vim-ecflow'
 
@@ -257,6 +262,9 @@ Plug 'tpope/vim-surround'
 
 " indent lines
 Plug 'Yggdroot/indentLine'
+let g:markdown_syntax_conceal=0
+let g:vim_json_conceal=0
+let g:vim_tex_conceal = 0
 
 " show marks before using them
 Plug 'junegunn/vim-peekaboo'
@@ -327,11 +335,14 @@ augroup filetype_latex
   autocmd Filetype latex,tex inoremap <buffer> <F6> <ESC>:LatexView<CR>
   autocmd Filetype latex,tex nnoremap <buffer> <leader>a viw<ESC>`<i\alert{<ESC>ea}<ESC>
   autocmd Filetype latex,tex vnoremap <buffer> <leader>a <ESC>`>a}<ESC>`<i\alert{<ESC>
+  autocmd Filetype latex,tex nnoremap <buffer> <leader>i viw<ESC>`<i\textit{<ESC>ea}<ESC>
+  autocmd Filetype latex,tex vnoremap <buffer> <leader>i <ESC>`>a}<ESC>`<i\textit{<ESC>
+  autocmd Filetype latex,tex set conceallevel=0
 augroup END
 
 " Markdown integration
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 auto BufRead,BufNewFile *.md set filetype=markdown.pandoc
 let maplocalleader = ','
 
