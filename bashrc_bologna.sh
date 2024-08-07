@@ -13,6 +13,9 @@ export PS1="\[\033[91;1m\]\u@\h \w\n> \[\033[0m\]"
 # for Ecflow
 export ECF_HOST="ecflow-gen-$USER-001"
 
+# OpenAI key
+[ -f ~/dotfiles/assistant.sh ] && source ~/dotfiles/assistant.sh
+
 # Options for various applications
 # export LANG=en_US.UTF-8
 # export LC_ALL=en_US.UTF-8
