@@ -3,10 +3,19 @@
 	email = juanjo.gomeznavarro@gmail.com
   signingkey = 96694567
 [core]
-	editor = vim
+	editor = /home/sp4e/SOFTWARE/bin/vim
 	pager = more
-[merge]
+[diff]
 	tool = vimdiff
+; [diff "vimdiff"]
+    ; cmd = /home/sp4e/SOFTWARE/bin/vimdiff $LOCAL $REMOTE
+[merge]
+	tool = meld
+[merge "meld"]
+    hideResolved = true
+    trustExitCode = false
+    ; cmd = /home/sp4e/SOFTWARE/bin/vimdiff $LOCAL $REMOTE $BASE $MERGED
+	; path = /home/sp4e/SOFTWARE/bin/vimdiff
 [color]
 	ui = true
 [alias]

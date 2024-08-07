@@ -106,3 +106,14 @@ export PATH="~/SOFTWARE/bin:$PATH"
 
 # Ecflow commands
 source ~/dotfiles/commands_monitor.sh
+
+compare_grib(){
+  if [[ $# != 2 ]]; then
+    echo "Usage: compare_grib file1 file2"
+    return 1
+  fi
+  vimdiff <(grib_dump -O $1) <(grib_dump -O $2)
+}
+
+
+

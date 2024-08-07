@@ -11,12 +11,11 @@ alias fd='fdfind'
 
 # fzf-related config
 export BAT_THEME="GitHub"
-export FZF_DEFAULT_COMMAND='rg --files'
-export FZF_DEFAULT_OPTS='--multi --border --height 80%'
-export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
-export FZF_CTRL_T_OPTS="
-  --preview 'batcat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_DEFAULT_OPTS="--multi --border --height 80%"
+# export single_quote="'"
+# export FZF_ALT_C_OPTS="--preview $single_quote tree -C {}$single_quote"
+# export FZF_CTRL_T_OPTS="--preview $single_quote batcat -n --color=always {}$single_quote --bind $single_quote ctrl-/:change-preview-window(down|hidden|)$single_quote"
 
 # Functions and commands defined elsewhere
 # source ~/dotfiles/shell-commands.sh
@@ -85,6 +84,14 @@ function ectoken {
     fi
 }
 
+######################################################
+# Source global definitions.
+# This enables using `module load` in HPC
+# if [ -f /etc/bashrc ]; then
+#     . /etc/bashrc
+# fi
+######################################################
+
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -115,11 +122,6 @@ fi
 # # desktop Aemet specific setup
 if [ $(hostname) == 'AEMET' ]; then
     [ -f ~/dotfiles/bashrc_dektop_aemet.sh ] && source ~/dotfiles/bashrc_dektop_aemet.sh
-fi
-
-# ecgate specific setup
-if [[ $HOSTNAME =~ "ecgb11" ]]; then
-  [ -f ~/dotfiles/bashrc_ecgate.sh ] && source ~/dotfiles/bashrc_ecgate.sh
 fi
 
 # bologna specific setup

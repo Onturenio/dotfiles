@@ -138,7 +138,6 @@ export -f _searchjob
 # export -f _getjobname
 export -f _getjobs
 
-# rm -rf ~/kk.txt
  # general template function to build Ecflow commands
 function ec_command() {
   command=""
@@ -268,7 +267,7 @@ function ec(){
     --bind "ctrl-f:execute(ec_command --host $host --port $port --command defqueued {+})" \
     --bind 'ctrl-z:change-preview-window(50%|2)' \
     --header="F5:refresh c-s:suspend c-r:resume c-k:kill c-c:complete c-q:requeue c-d:defcomplete c-f:defqueued c-z:preview" \
-    --preview "_build_preview" --preview-window=down,2,wrap \
+    --preview "_build_preview" --preview-window=down,5,wrap \
     > /dev/null
 }
 

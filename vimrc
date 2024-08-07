@@ -346,7 +346,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Send lines to a terminal (interactive programing, i.e. REPL)
 Plug 'jpalardy/vim-slime'
 let g:slime_no_mappings = 1
-Plug 'Klafyvel/vim-slime-cells'
+" Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "#%%"
 
@@ -667,19 +667,20 @@ augroup filetype_python
   autocmd FileType python hi CellBoundary cterm=underline ctermfg=243 ctermbg=229 gui=underline guifg=#76787b guibg=#fff5b1
   if g:system == "ECMWF"
     autocmd FileType python let g:slime_python_ipython = 1
-    autocmd FileType python let g:slime_target = "screen"
-    autocmd FileType python let g:slime_no_mappings = 1
-    " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-    autocmd FileType python let g:slime_dont_ask_default = 1
-  else
-    autocmd FileType python let g:slime_python_ipython = 1
     autocmd FileType python let g:slime_target = "tmux"
-    " autocmd FileType python let g:slime_target = "vimterminal"
     autocmd FileType python let g:slime_no_mappings = 1
     " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
     " autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
     autocmd FileType python let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
+    autocmd FileType python let g:slime_dont_ask_default = 1
+  else
+    autocmd FileType python let g:slime_python_ipython = 1
+    " autocmd FileType python let g:slime_target = "tmux"
+    autocmd FileType python let g:slime_target = "vimterminal"
+    autocmd FileType python let g:slime_no_mappings = 1
+    " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
+    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    " autocmd FileType python let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
     autocmd FileType python let g:slime_dont_ask_default = 1
   endif
 
