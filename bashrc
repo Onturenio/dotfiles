@@ -31,9 +31,9 @@ alias sur="ssh -X pn14@sur.aemet.es"
 alias cirrus="ssh pn14@cirrus.aemet.es"
 alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
 alias despacho="ssh navarro@172.24.141.44"
-alias server_gsreps_admin="ssh admin@172.24.8.92"
-alias server_gsreps_gsreps="ssh gsreps@172.24.8.92"
-
+alias gsreps_sscc_admin="ssh admin@172.24.8.92"
+alias gsreps_sscc_gsreps="ssh gsreps@172.24.8.92"
+alias gsreps_exp_it="ssh it@172.24.139.46"
 ##########################################################################
 # ECMWF
 ##########################################################################
@@ -133,3 +133,7 @@ fi
 if [[ $HOSTNAME =~ "pangea" ]]; then
   [ -f ~/dotfiles/bashrc_pangea.sh ] && source ~/dotfiles/bashrc_pangea.sh
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

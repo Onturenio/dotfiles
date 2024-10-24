@@ -341,8 +341,8 @@ augroup filetype_latex
 augroup END
 
 " Markdown integration
-" Plug 'vim-pandoc/vim-pandoc'
-" Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 auto BufRead,BufNewFile *.md set filetype=markdown.pandoc
 let maplocalleader = ','
 
@@ -357,9 +357,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Send lines to a terminal (interactive programing, i.e. REPL)
 Plug 'jpalardy/vim-slime'
 let g:slime_no_mappings = 1
-" Plug 'Klafyvel/vim-slime-cells'
+Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
-let g:slime_cell_delimiter = "#%%"
+let g:slime_cell_delimiter = "# %%"
 
 " Slime-related mapings
 " xmap <leader>s <Plug>SlimeRegionSend
@@ -575,6 +575,38 @@ if !has('gui_running')
 endif
  "}}}
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Allow copy to clipboard
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" function! CopyToClipboard()
+"     " Get the start and end of the visual selection
+"     let l:start = line("'<")
+"     let l:end = line("'>")
+
+"     " Retrieve the lines of the visual selection
+"     let selected_lines = getline(l:start, l:end)
+
+"     " Join the selected lines into a single string and escape for shell
+"     let selected_text = join(selected_lines, "\\n")
+
+"     " Check if there is selected text
+"     if empty(selected_text)
+"         echo "No text selected"
+"         return
+"     endif
+
+"     " Send the selected text to the clipboard using xclip
+"     call system('echo -e ' . shellescape(selected_text) . ' | xclip -selection clipboard')
+
+"     echo "Copied to clipboard!"
+" endfunction
+
+" Create a mapping to call this function
+" xnoremap <leader>y :<C-u>call CopyToClipboard()<CR>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM FILES HACKINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -686,12 +718,12 @@ augroup filetype_python
     autocmd FileType python let g:slime_dont_ask_default = 1
   else
     autocmd FileType python let g:slime_python_ipython = 1
-    " autocmd FileType python let g:slime_target = "tmux"
-    autocmd FileType python let g:slime_target = "vimterminal"
+    autocmd FileType python let g:slime_target = "tmux"
+    " autocmd FileType python let g:slime_target = "vimterminal"
     autocmd FileType python let g:slime_no_mappings = 1
     " autocmd FileType python let g:slime_vimterminal_cmd = g:ipython_exe
-    autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
-    " autocmd FileType python let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
+    " autocmd FileType python let g:slime_default_config = {"sessionname": "ipython", "windowname": "0"}
+    autocmd FileType python let g:slime_default_config = {"socket_name": "default", "target_pane": "0"}
     autocmd FileType python let g:slime_dont_ask_default = 1
   endif
 
@@ -704,7 +736,7 @@ augroup filetype_python
     autocmd FileType python let g:ale_linters = {'python': ['ruff', 'pydocstyle']}
     autocmd FileType python let g:ale_python_flake8_options = "--ignore W391,W503,W504,E266,E265,E111"
   endif
-  autocmd FileType python let g:slime_cell_delimiter = "#%%"
+  autocmd FileType python let g:slime_cell_delimiter = "# %%"
 augroup END
 
 augroup pandoc

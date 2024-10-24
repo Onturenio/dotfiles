@@ -2,12 +2,17 @@
 # Only for my PC
 ##########################################################################
 alias pangea="ssh -X radar@pangea.ogimet.com"
-alias cat='batcat --pager "less -RF" --theme=GitHub'
+# alias cat='batcat --pager "less -RF" --theme=GitHub'
 alias vpn='sudo openfortivpn -c ~/.vpnconfig'
+alias vpn_proxy='ssh -D 8080 -N onturenio@192.168.1.174'
 alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
 alias aemet='/home/navarro/SOFTWARE/anaconda3/envs/GDAL/bin/python ~/SOFTWARE/aemet.py'
 alias login_shell="tsh login --proxy=shell.ecmwf.int:443"
 alias login_jump="tsh login --proxy=jump.ecmwf.int:443"
+alias md2pdf="docker run --rm -v .:/documentation meteo-documentation:latest md2pdf.sh"
+
+
+
 
 source ~/SOFTWARE/cdoCompletion.bash
 source ~/SOFTWARE/gmt_completion.bash
@@ -23,6 +28,11 @@ export PATH="$PATH:$HOME/SOFTWARE/local/bin/"
 # export PATH="$PATH:$HOME/SOFTWARE/"
 
 stty -ixon  # this avoids freezing when pressing C-s in the terminal https://unix.stackexchange.com/questions/72086/ctrl-s-hang-terminal-emulator
+
+# CUDA environment variables
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+#
 
 function passwd_INTERNET {
 if [[ $# == 0 ]]; then
@@ -51,7 +61,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # activate copilot CLI
-eval "$(github-copilot-cli alias -- "$0")"
+# eval "$(github-copilot-cli alias -- "$0")"
 
 conda activate AEMET2
 
@@ -59,12 +69,16 @@ conda activate AEMET2
 source ~/dotfiles/assistant.sh
 
 function REPL {
-    options=("assistant" "meteoradar")
+    options=("assistant" "meteoradar" "TEST3")
     choice=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select environment: ")
 
     if [[ $choice == "assistant" ]]; then
         cd ~/METEORED/CHATBOT
         conda activate assistant
+        ipython
+    elif [[ $choice == "TEST3" ]]; then
+        cd ~/METEORED/CHATBOT
+        conda activate TEST3
         ipython
     elif [[ $choice == "meteoradar" ]]; then
         cd ~/METEORED/METEORADAR
@@ -82,3 +96,17 @@ function REPL {
 # if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
 #     PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 # fi
+
+function ollama_docker() {
+    if [[ "$1" == "up" ]]; then
+        # Reinicia el módulo nvidia_uvm
+        sudo rmmod nvidia_uvm && sudo modprobe nvidia_uvm
+        # Llama a docker-compose para levantar los servicios
+        docker compose -f "/home/navarro/dotfiles/start_ollama_webui.yaml" up -d
+    elif [[ "$1" == "down" ]]; then
+        # Llama a docker-compose para destruir los servicios
+        docker compose -f "/home/navarro/dotfiles/start_ollama_webui.yaml" down
+    else
+        echo "Error: La opción de comando inválida. Uso: llama_docker [up|down]"
+    fi
+}

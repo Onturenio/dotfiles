@@ -3,7 +3,7 @@
 	email = juanjo.gomeznavarro@gmail.com
   signingkey = 96694567
 [core]
-	editor = /home/sp4e/SOFTWARE/bin/vim
+	; editor = /home/sp4e/SOFTWARE/bin/vim
 	pager = more
 [diff]
 	tool = vimdiff
