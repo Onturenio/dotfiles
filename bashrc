@@ -28,12 +28,18 @@ export PS1="\[\033[32;1m\]\u@\h \w\n> \[\033[0m\]"
 ##########################################################################
 alias neon="ssh -X pn14@neon.aemet.es"
 alias sur="ssh -X pn14@sur.aemet.es"
-alias cirrus="ssh pn14@cirrus.aemet.es"
-alias cirrusdesa="ssh pn14@cirrusdesa.aemet.es"
-alias despacho="ssh navarro@172.24.141.44"
-alias gsreps_sscc_admin="ssh admin@172.24.8.92"
-alias gsreps_sscc_gsreps="ssh gsreps@172.24.8.92"
-alias gsreps_exp_it="ssh it@172.24.139.46"
+alias cirrus="ssh cirrus"
+alias cirrusdesa="ssh cirrusdesa"
+alias despacho="ssh despacho"
+alias gsreps_sscc_admin="ssh gsreps_sscc_admin"
+alias gsreps_sscc_gsreps="ssh gsreps_sscc_gsreps"
+alias gsreps_exp_it="ssh gsreps_exp_it"
+
+ftp_ecmwf () {
+    echo "Recall user sp4e and TOTP password"
+    ftp sp4e@boaccess.ecmwf.int
+}
+
 ##########################################################################
 # ECMWF
 ##########################################################################
