@@ -1,4 +1,5 @@
 {
+"pylsp.enable": true,
 "pylsp.plugins.pycodestyle.enabled": false,
 "pylsp.plugins.pyls_isort.enabled": false,
 "pylsp.plugins.flake8.enabled": false,

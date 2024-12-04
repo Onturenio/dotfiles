@@ -84,13 +84,15 @@ function ectoken {
     fi
 }
 
-######################################################
-# Source global definitions.
-# This enables using `module load` in HPC
-# if [ -f /etc/bashrc ]; then
-#     . /etc/bashrc
-# fi
-######################################################
+# function to compara grib files
+#
+function grib_compare_keys(){
+    if [ $# -ne 2 ]; then
+        echo "Usage: grib_compare_keys file1 file2"
+        return 1
+    fi
+    vimdiff <(grib_ls -p shortName,packingType,edition,levelType,level $1 | sort) <(grib_ls -p shortName,packingType,edition,levelType,level $2| sort)
+}
 
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

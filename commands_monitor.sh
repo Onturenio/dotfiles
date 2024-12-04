@@ -74,13 +74,15 @@ _getjobs(){
       | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
       | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
       | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
-      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#'
+      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
 
   ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91mHPC\033[0m" $0}' \
       | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
       | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
       | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
-      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#'
+      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
+
+  wait
 }
 
 # auxiliary function to get exhaustive info from a given job

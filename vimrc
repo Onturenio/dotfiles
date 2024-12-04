@@ -71,7 +71,7 @@ nnoremap <S-RIGHT> <ESC>ve
 nnoremap <S-LEFT> <ESC>vb
 
 " exit to normal mode
-inoremap ZZ <ESC>ZZ
+" inoremap ZZ <ESC>ZZ
 inoremap jk <C-[>
 " vnoremap <C-UP> <ESC>
 
