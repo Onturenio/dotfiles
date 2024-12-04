@@ -4,7 +4,7 @@
 alias pangea="ssh -X radar@pangea.ogimet.com"
 # alias cat='batcat --pager "less -RF" --theme=GitHub'
 alias vpn='sudo openfortivpn -c ~/.vpnconfig'
-alias vpn_proxy='ssh -D 8080 -N onturenio@192.168.1.174'
+alias proxy_sur='ssh -D 8080 -N proxy_sur'
 alias flexiVDI="~/AEMET/flexvdi-client-3.1.4-x86_64.AppImage"
 alias aemet='/home/navarro/SOFTWARE/anaconda3/envs/GDAL/bin/python ~/SOFTWARE/aemet.py'
 alias login_shell="tsh login --proxy=shell.ecmwf.int:443"
@@ -14,8 +14,8 @@ alias md2pdf="docker run --rm -v .:/documentation meteo-documentation:latest md2
 
 
 
-source ~/SOFTWARE/cdoCompletion.bash
-source ~/SOFTWARE/gmt_completion.bash
+# source ~/SOFTWARE/cdoCompletion.bash
+# source ~/SOFTWARE/gmt_completion.bash
 export PATH="$PATH:/home/navarro/SOFTWARE/texlive/2020/bin/x86_64-linux"
 export MANPATH="$MANPATH:/home/navarro/SOFTWARE/texlive/2020/texmf-dist/doc/man/:/home/navarro/SOFTWARE/local/share/man"
 export INFOPATH="$INFOPATH:/home/navarro/SOFTWARE/texlive/2020/texmf-dist/doc/man/"

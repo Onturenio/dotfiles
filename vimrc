@@ -7,6 +7,8 @@ elseif hostname() =~ 'bender2'
   let g:system = 'BENDER2'
 elseif hostname() =~ 'AEMET'
   let g:system = 'AEMET'
+elseif hostname() =~ 'MacBook'
+  let g:system = 'BENDER2'
 else
   let g:system = 'OTRO'
 endif
@@ -383,7 +385,7 @@ let g:github_colors_soft = 1
 let g:lightline = { 'colorscheme': 'github' }
 "
 " gruvbox colorscheme
-" Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " Plug 'NLKNguyen/papercolor-theme'
 
 " Airline information line
@@ -392,7 +394,7 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = "dark"
-" let g:airline_theme = "gruvbox"
+let g:airline_theme = "gruvbox"
 " let g:airline_theme = "atomic"
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
@@ -580,31 +582,31 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Allow copy to clipboard
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" function! CopyToClipboard()
-"     " Get the start and end of the visual selection
-"     let l:start = line("'<")
-"     let l:end = line("'>")
+function! CopyToClipboard()
+    " Get the start and end of the visual selection
+    let l:start = line("'<")
+    let l:end = line("'>")
 
-"     " Retrieve the lines of the visual selection
-"     let selected_lines = getline(l:start, l:end)
+    " Retrieve the lines of the visual selection
+    let selected_lines = getline(l:start, l:end)
 
-"     " Join the selected lines into a single string and escape for shell
-"     let selected_text = join(selected_lines, "\\n")
+    " Join the selected lines into a single string and escape for shell
+    let selected_text = join(selected_lines, "\\n")
 
-"     " Check if there is selected text
-"     if empty(selected_text)
-"         echo "No text selected"
-"         return
-"     endif
+    " Check if there is selected text
+    if empty(selected_text)
+        echo "No text selected"
+        return
+    endif
 
-"     " Send the selected text to the clipboard using xclip
-"     call system('echo -e ' . shellescape(selected_text) . ' | xclip -selection clipboard')
+    " Send the selected text to the clipboard using xclip
+    call system('echo -e ' . shellescape(selected_text) . ' | xclip -selection clipboard')
 
-"     echo "Copied to clipboard!"
-" endfunction
+    echo "Copied to clipboard!"
+endfunction
 
 " Create a mapping to call this function
-" xnoremap <leader>y :<C-u>call CopyToClipboard()<CR>
+xnoremap <leader>y :<C-u>call CopyToClipboard()<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -968,7 +970,7 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
 
-set background=light
-colorscheme github
-" colorscheme gruvbox
+set background=dark
+" colorscheme github
+colorscheme gruvbox
 " colorscheme desert
