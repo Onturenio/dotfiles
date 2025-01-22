@@ -357,9 +357,9 @@ xmap <C-d> gc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Send lines to a terminal (interactive programing, i.e. REPL)
-Plug 'jpalardy/vim-slime'
+" Plug 'jpalardy/vim-slime'
 let g:slime_no_mappings = 1
-Plug 'Klafyvel/vim-slime-cells'
+" Plug 'Klafyvel/vim-slime-cells'
 let g:slime_cells_highlight_from = "CursorLineNr"
 let g:slime_cell_delimiter = "# %%"
 
@@ -394,7 +394,7 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = "dark"
-let g:airline_theme = "gruvbox"
+" let g:airline_theme = "gruvbox"
 " let g:airline_theme = "atomic"
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
@@ -970,7 +970,9 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
 
-set background=dark
-" colorscheme github
-colorscheme gruvbox
+set background=light
+colorscheme github
+" colorscheme gruvbox
 " colorscheme desert
+
+:let g:fortran_free_source=1

@@ -17,7 +17,7 @@ alias miec='ec --host ecflow-gen-sp4e-001 --port 3141'
 #### end configuration ecflow commands ####
 
 
-# list queues for given user, sp0w by default
+# check job list for given user, sp0w by default
 function sq {
   if [[ $# == 0 ]]
   then
@@ -33,54 +33,76 @@ function sq {
     # awk '{print $1, $2}')
     fzf --ansi --header="$header" --no-sort --exact +i --bind "F5:reload(_getjobs $user)" | awk '{print $1, $2}')
 
-  # get PIDs reading from first column in processes
-  pids=""
-  while read line; do
-    system=$(echo $line | awk '{print $1}')
-    pid=$(echo $line | awk '{print $2}')
-    pids="$pids $pid"
-  done < <(echo "$processes")
+  # Proceed to kill selected jobs with confirmation
+  if [[ -n "$processes" ]]; then
+    ecs_jobs=""
+    hpc_jobs=""
 
-  # ask whether to kill jobs or not
-  if [[ "$pids" != " " ]]; then
-    read -p "Want me to kill $pids? [y/N]: " flag
-    if [[ $flag == 'y' ]]; then
-      # killing selected jobs
-      while
-        read line; do
-        system=$(echo $line | awk '{print $1}')
-        pid=$(echo $line | awk '{print $2}')
-        if [[ $system == "ECS" ]]; then
-          host="ecs-login"
-        elif [[ $system =~ "HPC" ]]; then
-          host="hpc-login"
-        fi
-        echo killing $pid in $user@$host
-        ssh -n $user@$host "scancel $pid"
-      done < <(echo "$processes")
+    # Read and separate jobs by system
+    while read -r line; do
+      system=$(echo $line | awk '{print $1}')
+      pid=$(echo $line | awk '{print $2}')
+      if [[ $system == "ECS" ]]; then
+        ecs_jobs+="$pid "
+      elif [[ $system =~ "HPC" ]]; then
+        hpc_jobs+="$pid "
+      else
+        echo "Unknown system: $system"
+      fi
+    done < <(echo "$processes")
+
+    # Kill once per system
+    if [[ -n $ecs_jobs ]]; then
+      read -p "Want me to kill ECS jobs: $ecs_jobs? [y/N]: " flag
+      if [[ $flag == 'y' ]]; then
+        echo "Killing jobs in $user@ecs-login: $ecs_jobs"
+        ssh -n "$user@ecs-login" "scancel $ecs_jobs"
+      fi
     fi
-  else
-    # nothig was selected
-    echo "Nothing selected to be killed"
+    if [[ -n $hpc_jobs ]]; then
+      read -p "Want me to kill HPC jobs: $hpc_jobs? [y/N]: " flag
+      if [[ $flag == 'y' ]]; then
+        echo "Killing jobs in $user@hpc-login: $hpc_jobs"
+        ssh -n "$user@hpc-login" "scancel $hpc_jobs"
+      fi
+    fi
   fi
 }
 
 # auxiliary function to get list of jobs in both ECS and HPC
 _getjobs(){
   format="%.10i %.5P %.18j %.8u %.10T %.10M %.6D %.20R %o"
-  # ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34m" "ECS" $0 "\033[0m"}' | sed "s#\x1B\(\[;49;[0-9][0-9]m\)\(.*\)RUNNING\(.*\)#\x1B\1\2\x1B[;49;32mRUNNING\x1B\1\3#"
-  # ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91m" "HPC" $0 "\033[0m"}' | sed "s#\x1B\(\[;49;[0-9][0-9]m\)\(.*\)RUNNING\(.*\)#\x1B\1\2\x1B[;49;32mRUNNING\x1B\1\3#"
-  ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34mECS\033[0m" $0}' \
+
+  if [[ $ECS_HPC == "ECS" ]]; then
+    # assuming we are in ECS:
+    squeue -o "$format" -h -u $1 | awk '{print "\033[;49;34mECS\033[0m" $0}' \
+      | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#" \
+      | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
+      | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
+      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
+
+    ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91mHPC\033[0m" $0}' \
+      | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
+      | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
+      | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
+      | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
+  elif [[ $ECS_HPC == "HPC" ]]; then
+    # assuming we are in HPC:
+    ssh ecs-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;34mECS\033[0m" $0}' \
       | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
       | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
       | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
       | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
 
-  ssh hpc-batch "squeue -o \"$format\" -h -u $1" | awk '{print "\033[;49;91mHPC\033[0m" $0}' \
+    squeue -o "$format" -h -u $1 | awk '{print "\033[;49;91mHPC\033[0m" $0}' \
       | sed "s#RUNNING#\x1B[;49;32mRUNNING\x1B[0m#"\
       | sed "s#COMPLETING#\x1B[;49;33mCOMPLETING\x1B[0m#" \
       | sed "s#PENDING#\x1B[;49;36mPENDING\x1B[0m#" \
       | sed 's#\(.*\ \).*\(/gSREPS_AI.*\).job.*#\1\2#' &
+  else
+    echo "Unknown system or variable ECS_HPC not set."
+    return 1
+  fi
 
   wait
 }
@@ -100,42 +122,42 @@ _getjobs(){
 #   fi
 # }
 
-_getjobname(){
-  if [ $1 = "ECS" ]; then
-    var=$(ssh ecs-batch "squeue -j $2 -o %o" | grep -v COMMAND)
-  else
-    var=$(ssh hpc-batch "squeue -j $2 -o %o" | grep -v COMMAND)
-  fi
+# _getjobname(){
+#   if [ $1 = "ECS" ]; then
+#     var=$(ssh ecs-batch "squeue -j $2 -o %o" | grep -v COMMAND)
+#   else
+#     var=$(ssh hpc-batch "squeue -j $2 -o %o" | grep -v COMMAND)
+#   fi
 
-  if [[ $var == "" ]]; then
-    echo "Job not running"
-  else
-    echo $var | awk '{print $1}'
-  fi
-}
+#   if [[ $var == "" ]]; then
+#     echo "Job not running"
+#   else
+#     echo $var | awk '{print $1}'
+#   fi
+# }
 
-_searchjob(){
-    if [[ $@ =~ "suite" ]]; then
-        echo "Suite Node, no job to search"
-        return 0
-    elif [[ $@ =~ "family" ]]; then
-        echo "Family Node, no job to search"
-        return 0
-    elif [[ ! $@ =~ "active" ]]; then
-        echo "Inactive Node, no job to search"
-        return 0
-    fi
-    jobname=$(echo $2 | awk '{print $1}')
-    jobs=$(_getjobs $1 | grep $jobname)
-    if [[ $jobs == "" ]]; then
-        echo -e "\033[;49;31mJOB NOT FOUND!!!\033[0m"
-    else
-        echo -e "\033[;49;32mJob found in queue\033[0m"
-    fi
-}
-export -f _searchjob
+# _searchjob(){
+#     if [[ $@ =~ "suite" ]]; then
+#         echo "Suite Node, no job to search"
+#         return 0
+#     elif [[ $@ =~ "family" ]]; then
+#         echo "Family Node, no job to search"
+#         return 0
+#     elif [[ ! $@ =~ "active" ]]; then
+#         echo "Inactive Node, no job to search"
+#         return 0
+#     fi
+#     jobname=$(echo $2 | awk '{print $1}')
+#     jobs=$(_getjobs $1 | grep $jobname)
+#     if [[ $jobs == "" ]]; then
+#         echo -e "\033[;49;31mJOB NOT FOUND!!!\033[0m"
+#     else
+#         echo -e "\033[;49;32mJob found in queue\033[0m"
+#     fi
+# }
 
 # export functions so they are visible for subprocesses
+# export -f _searchjob
 # export -f _getjobinfo
 # export -f _getjobname
 export -f _getjobs
