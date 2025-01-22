@@ -4,7 +4,7 @@
   signingkey = 96694567
 [core]
 	; editor = /home/sp4e/SOFTWARE/bin/vim
-	pager = more
+	pager = 
 [diff]
 	tool = vimdiff
 ; [diff "vimdiff"]
